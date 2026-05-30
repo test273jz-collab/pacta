@@ -26,7 +26,7 @@ const wishlistRoutes = require("./routes/wishlist.routes");
 const notificationRoutes = require("./routes/notification.routes");
 const contactRoutes = require("./routes/contact.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
-
+console.log('dd')
 const app = express();
 
 // Security middleware

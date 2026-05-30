@@ -12,7 +12,10 @@ async function connectToDatabase() {
     return cachedConnection;
   }
 
-  cachedConnection = await mongoose.connect(MONGO_URI);
+  cachedConnection = await mongoose.connect(MONGO_URI, {
+  serverSelectionTimeoutMS: 5000, // Fail faster if unable to connect
+  bufferCommands: false,         // 🔴 DISABLE BUFFERING
+});
   return cachedConnection;
 }
 

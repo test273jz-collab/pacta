@@ -1,52 +1,32 @@
 require("dotenv").config();
 
 const app = require("./app");
-const connectDB = require("./config/db");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
 
-/* ================= VALIDATION ================= */
-if (!process.env.MONGO_URI) {
-  console.error("❌ MONGO_URI missing");
-  process.exit(1);
+if (!MONGO_URI) {
+  throw new Error("MONGO_URI missing");
 }
 
-if (!process.env.JWT_SECRET) {
-  console.error("❌ JWT_SECRET missing");
-  process.exit(1);
-}
+// 🔴 CRITICAL FIX
+async function start() {
+  try {
+    console.log("Connecting to MongoDB...");
 
-/* ================= START SERVER ================= */
-const startServer = async () => {
-  await connectDB();
+    await mongoose.connect(MONGO_URI);
 
-  const server = app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-  });
+    console.log("✅ MongoDB Connected");
 
-  /* ================= GRACEFUL SHUTDOWN ================= */
-  const shutdown = (signal) => {
-    console.log(`\n${signal} received`);
-
-    server.close(() => {
-      console.log("HTTP server closed");
-      process.exit(0);
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
     });
-  };
 
-  process.on("SIGINT", () => shutdown("SIGINT"));
-  process.on("SIGTERM", () => shutdown("SIGTERM"));
-};
+  } catch (err) {
+    console.error("❌ MongoDB connection failed:", err.message);
+    process.exit(1);
+  }
+}
 
-startServer();
-
-/* ================= GLOBAL ERRORS ================= */
-process.on("uncaughtException", (err) => {
-  console.error("UNCAUGHT EXCEPTION:", err);
-  process.exit(1);
-});
-
-process.on("unhandledRejection", (err) => {
-  console.error("UNHANDLED REJECTION:", err);
-  process.exit(1);
-});
+start();

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-
+console.log("MONGO_URI:", process.env.MONGO_URI?.slice(0, 50));
 if (!MONGO_URI) {
   throw new Error("MONGO_URI missing");
 }

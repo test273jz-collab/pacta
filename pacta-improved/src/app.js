@@ -53,8 +53,8 @@ app.use(cors({
 }));
 
 // Body parsing
-app.use(express.json({ limit: "10kb" }));
-app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(express.json());
+app.use(express.urlencoded());
 
 
 // Data sanitization against NoSQL injection

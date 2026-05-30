@@ -1,7 +1,7 @@
 import type { Lang } from "@/types";
 
 export const API_URL =
-  import.meta.env.VITE_API_URL || "https://pacta-bquy.vercel.app/api";
+  import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api";
 
 export const DEFAULT_LANG: Lang = "en";
 

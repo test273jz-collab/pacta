@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 30% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 10%;
+    --primary: 233 48% 14%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 40 100% 56%;
+    --secondary-foreground: 233 48% 14%;
+    --muted: 30 10% 97%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 30 10% 95%;
+    --accent-foreground: 220 30% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 233 48% 14%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 233 48% 7%;
+    --foreground: 0 0% 98%;
+    --card: 233 48% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 233 48% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 40 100% 56%;
+    --primary-foreground: 233 48% 14%;
+    --secondary: 233 48% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 233 48% 15%;
+    --muted-foreground: 0 0% 63%;
+    --accent: 233 48% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 233 48% 18%;
+    --input: 233 48% 18%;
+    --ring: 40 100% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* RTL Font */
+  body.rtl,
+  body.rtl .font-sans {
+    font-family: 'IBM Plex Sans Arabic', 'DM Sans', system-ui, sans-serif;
+  }
+
+  body.ltr {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .rtl { direction: rtl; }
+  .ltr { direction: ltr; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+  /* Logical properties */
+  .me-auto { margin-inline-end: auto; }
+  .ms-auto { margin-inline-start: auto; }
+  .ps-3 { padding-inline-start: 0.75rem; }
+  .pe-3 { padding-inline-end: 0.75rem; }
+
+  /* Smooth image transitions */
+  img { transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+}

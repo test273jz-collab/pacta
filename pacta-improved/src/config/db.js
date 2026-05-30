@@ -22,4 +22,12 @@ async function connectDB() {
   }
 }
 
+mongoose.connection.on("connected", () => {
+  console.log("✅ DB CONNECTED");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.log("❌ DB ERROR:", err.message);
+});
+
 module.exports = connectDB;

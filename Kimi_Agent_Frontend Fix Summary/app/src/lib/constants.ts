@@ -1,6 +1,7 @@
 import type { Lang } from "@/types";
 
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+export const API_URL =
+  import.meta.env.VITE_API_URL || "https://pacta-bquy.vercel.app/api";
 
 export const DEFAULT_LANG: Lang = "en";
 
@@ -9,23 +10,90 @@ export const TOKEN_KEY = "pacta_token";
 export const USER_KEY = "pacta_user";
 
 export const WILAYAS = [
-  "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", "Bejaia", "Biskra",
-  "Bechar", "Blida", "Bouira", "Tamanrasset", "Tebessa", "Tlemcen", "Tiaret",
-  "Tizi Ouzou", "Algiers", "Djelfa", "Jijel", "Setif", "Saida", "Skikda",
-  "Sidi Bel Abbes", "Annaba", "Guelma", "Constantine", "Medea", "Mostaganem",
-  "MSila", "Mascara", "Ouargla", "Oran", "El Bayadh", "Illizi", "Bordj Bou Arreridj",
-  "Boumerdes", "El Tarf", "Tindouf", "Tissemsilt", "El Oued", "Khenchela",
-  "Souk Ahras", "Tipaza", "Mila", "Ain Defla", "Naama", "Ain Temouchent",
-  "Ghardaia", "Relizane", "El M'Ghair", "El Meniaa", "Ouled Djellal",
-  "Bordj Badji Mokhtar", "Beni Abbes", "In Salah", "In Guezzam", "Touggourt",
-  "Djanet", "Timimoun"
+  "Adrar",
+  "Chlef",
+  "Laghouat",
+  "Oum El Bouaghi",
+  "Batna",
+  "Bejaia",
+  "Biskra",
+  "Bechar",
+  "Blida",
+  "Bouira",
+  "Tamanrasset",
+  "Tebessa",
+  "Tlemcen",
+  "Tiaret",
+  "Tizi Ouzou",
+  "Algiers",
+  "Djelfa",
+  "Jijel",
+  "Setif",
+  "Saida",
+  "Skikda",
+  "Sidi Bel Abbes",
+  "Annaba",
+  "Guelma",
+  "Constantine",
+  "Medea",
+  "Mostaganem",
+  "MSila",
+  "Mascara",
+  "Ouargla",
+  "Oran",
+  "El Bayadh",
+  "Illizi",
+  "Bordj Bou Arreridj",
+  "Boumerdes",
+  "El Tarf",
+  "Tindouf",
+  "Tissemsilt",
+  "El Oued",
+  "Khenchela",
+  "Souk Ahras",
+  "Tipaza",
+  "Mila",
+  "Ain Defla",
+  "Naama",
+  "Ain Temouchent",
+  "Ghardaia",
+  "Relizane",
+  "El M'Ghair",
+  "El Meniaa",
+  "Ouled Djellal",
+  "Bordj Badji Mokhtar",
+  "Beni Abbes",
+  "In Salah",
+  "In Guezzam",
+  "Touggourt",
+  "Djanet",
+  "Timimoun",
 ];
 
-export const GUIDE_LANGUAGES = ["en", "ar", "fr", "es", "de", "it", "tr", "zh"] as const;
+export const GUIDE_LANGUAGES = [
+  "en",
+  "ar",
+  "fr",
+  "es",
+  "de",
+  "it",
+  "tr",
+  "zh",
+] as const;
 
 export const GUIDE_SPECIALIZATIONS = [
-  "historical", "cultural", "adventure", "nature", "food",
-  "photography", "religious", "shopping", "nightlife", "desert", "mountain", "coastal"
+  "historical",
+  "cultural",
+  "adventure",
+  "nature",
+  "food",
+  "photography",
+  "religious",
+  "shopping",
+  "nightlife",
+  "desert",
+  "mountain",
+  "coastal",
 ] as const;
 
 export const STATUS_COLORS: Record<string, string> = {
@@ -245,7 +313,8 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
     },
     contact: {
       title: "Contact Us",
-      subtitle: "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+      subtitle:
+        "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
       name: "Your Name",
       email: "Email Address",
       subject: "Subject",

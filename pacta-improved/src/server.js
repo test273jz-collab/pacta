@@ -14,8 +14,15 @@ if (!MONGO_URI) {
 async function start() {
   try {
     console.log("Connecting to MongoDB...");
-
-    await mongoose.connect(MONGO_URI);
+mongoose.connect(
+  "mongodb+srv://djdidoussama_db_user:LhrCKuYtDuxq874Q@cluster1.1eraxfk.mongodb.net/?appName=Cluster1",
+  (err) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Connected to mongodb database successfully!");
+  }
+);
 
     console.log("✅ MongoDB Connected");
 

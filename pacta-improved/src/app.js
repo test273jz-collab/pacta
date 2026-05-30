@@ -38,7 +38,7 @@ app.use(helmet({
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
-  : ["https://pacta-wtsz.vercel.app/", "http://localhost:5173"];
+  : ["https://pacta-wtsz.vercel.app", "http://localhost:5173"];
 
 app.use(cors({
   origin: (origin, callback) => {

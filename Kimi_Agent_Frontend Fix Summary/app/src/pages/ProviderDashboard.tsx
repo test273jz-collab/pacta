@@ -9,7 +9,7 @@ import {
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api";
 const fetchApi = async (path: string, options?: RequestInit) => {
   const token = localStorage.getItem("pacta_token") || localStorage.getItem("token");
   const res = await fetch(`${API_BASE}${path}`, {

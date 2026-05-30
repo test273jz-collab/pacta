@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Mail, Loader2, CheckCircle } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api";
 
 export default function AdminMessages() {
   const { isRTL } = useLanguage();

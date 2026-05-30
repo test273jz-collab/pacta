@@ -117,7 +117,7 @@ export default function Register() {
         languagesSpoken: form.languagesSpoken ? form.languagesSpoken.split(",").map((s) => s.trim()).filter(Boolean) : [],
         specializations: form.specializations ? form.specializations.split(",").map((s) => s.trim()).filter(Boolean) : [],
       };
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/register-complete`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api"}/auth/register-complete`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });

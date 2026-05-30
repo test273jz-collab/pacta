@@ -7,7 +7,7 @@ import {
 import { toast } from "sonner";
 
 // Minimal API call helper — reuses whatever base URL the project uses
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api";
 
 const fetchApi = async (path: string, options?: RequestInit) => {
   const token = localStorage.getItem("token");

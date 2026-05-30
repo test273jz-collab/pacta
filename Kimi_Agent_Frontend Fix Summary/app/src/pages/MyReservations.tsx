@@ -11,7 +11,7 @@ import {
 import { toast } from "sonner";
 import type { Reservation } from "@/types";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "https://pacta-iw8j.onrender.com/api";
 
 // ==================== REVIEW MODAL ====================
 interface ReviewModalProps {

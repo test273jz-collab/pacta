@@ -1,8 +1,10 @@
 import { Volume2, VolumeX } from "lucide-react";
 import { useAudio } from "@/hooks/useAudio";
-import music from "../../public/music.mp3";
+
 export default function MusicPlayer() {
-  const { playing, toggle } = useAudio(music); // Path to your file in /public folder
+  // Pass the path as a string. 
+  // "/music.mp3" tells the browser to look in your 'public' folder.
+  const { playing, toggle } = useAudio("/music.mp3"); 
 
   return (
     <button

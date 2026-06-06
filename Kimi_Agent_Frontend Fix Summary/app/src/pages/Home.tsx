@@ -108,15 +108,25 @@ export default function Home() {
               idx === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Background image */}
-            {ad.image && (
+            {/* Replace the old <img> block with this */}
+            {ad.video ? (
+              <video
+                key={ad._id} // forces re-mount on slide change
+                src={ad.video}
+                poster={ad.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : ad.poster ? (
               <img
-                src={ad.image}
+                src={ad.poster}
                 alt={isRTL ? ad.titleAr : ad.titleEn}
                 className="absolute inset-0 w-full h-full object-cover"
-                loading="eager"
               />
-            )}
+            ) : null}
 
             {/* Gradient — stronger on the text side */}
             {isRTL ? (
@@ -144,6 +154,10 @@ export default function Home() {
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white drop-shadow-sm">
                   {isRTL ? ad.titleAr : ad.titleEn}
                 </h1>
+                {/* Inside the content block, above the title */}
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 text-white/80">
+                  {ad.category}
+                </span>
 
                 <p className="text-white/75 text-base sm:text-lg font-medium mb-10 leading-relaxed max-w-lg">
                   {isRTL ? ad.descAr : ad.descEn}

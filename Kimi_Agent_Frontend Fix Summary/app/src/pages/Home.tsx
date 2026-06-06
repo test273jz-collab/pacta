@@ -109,11 +109,11 @@ export default function Home() {
             }`}
           >
             {/* Replace the old <img> block with this */}
-            {ad.video ? (
+            {ad?.video ? (
               <video
                 key={ad._id}
-                src={ad.video}
-                poster={ad.poster}
+                src={ad?.video}
+                poster={ad?.poster}
                 autoPlay
                 muted
                 loop
@@ -123,9 +123,9 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover"
                 onLoadedMetadata={(e) => e.target.play()}
               />
-            ) : ad.poster ? (
+            ) : ad?.poster ? (
               <img
-                src={ad.poster}
+                src={ad?.poster}
                 alt={isRTL ? ad.titleAr : ad.titleEn}
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -151,7 +151,7 @@ export default function Home() {
               >
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-pacta-gold/20 backdrop-blur-sm border border-pacta-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-5 text-pacta-gold">
                   <Sparkles size={12} />
-                  {ad.category}
+                  {ad?.category}
                 </span>
 
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white drop-shadow-sm">

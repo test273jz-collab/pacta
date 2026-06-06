@@ -1,8 +1,18 @@
 // ========== USER ==========
-export type UserRole = "tourist" | "hotel_owner" | "resort_owner" | "rental_owner" | "guide" | "admin";
+export type UserRole =
+  | "tourist"
+  | "hotel_owner"
+  | "resort_owner"
+  | "rental_owner"
+  | "guide"
+  | "admin";
 export type Lang = "en" | "ar";
 export type Currency = "DZD" | "EUR" | "USD";
-export type ReservationStatus = "pending" | "confirmed" | "cancelled" | "completed";
+export type ReservationStatus =
+  | "pending"
+  | "confirmed"
+  | "cancelled"
+  | "completed";
 export type PaymentStatus = "pending" | "paid" | "refunded" | "failed";
 export type ListingModel = "Hotel" | "Rental" | "Resort" | "Guide";
 export type NotificationType =
@@ -339,6 +349,9 @@ export interface Ad {
   descAr: string;
   bgClass: string;
   image: string;
+  category: string; // Added this
+  video?: string; // Added this (optional)
+  poster?: string; // Added this (optional)
   link: string;
   displayOrder: number;
   clickCount: number;

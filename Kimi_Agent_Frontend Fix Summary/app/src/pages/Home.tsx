@@ -109,19 +109,18 @@ export default function Home() {
             }`}
           >
             {/* Replace the old <img> block with this */}
-            {ad?.video ? (
+            {ad.video ? (
               <video
                 key={ad._id}
-                src={ad?.video}
-                poster={ad?.poster}
+                src={ad.video}
+                poster={ad.poster}
                 autoPlay
                 muted
                 loop
                 playsInline
-                // Add these to ensure smooth handling
                 preload="auto"
                 className="absolute inset-0 w-full h-full object-cover"
-                onLoadedMetadata={(e) => e.target.play()}
+                onLoadedMetadata={(e) => (e.target as HTMLVideoElement).play()}
               />
             ) : ad?.poster ? (
               <img

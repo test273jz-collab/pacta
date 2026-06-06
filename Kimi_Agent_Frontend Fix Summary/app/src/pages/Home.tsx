@@ -30,7 +30,7 @@ export default function Home() {
     if (!ads.length) return;
     const timer = setInterval(
       () => setCurrentSlide((p) => (p + 1) % ads.length),
-      8000,
+      15000,
     );
     return () => clearInterval(timer);
   }, [ads.length]);
@@ -111,16 +111,15 @@ export default function Home() {
             {/* Replace the old <img> block with this */}
             {ad.video ? (
               <video
-                key={ad._id}
+                key={ad.video} // Use the video URL as the key to force a re-load
                 src={ad.video}
                 poster={ad.poster}
                 autoPlay
                 muted
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata" // Change from "auto" to "metadata" to load faster
                 className="absolute inset-0 w-full h-full object-cover"
-                onLoadedMetadata={(e) => (e.target as HTMLVideoElement).play()}
               />
             ) : ad?.poster ? (
               <img

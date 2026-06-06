@@ -22,12 +22,15 @@ import AdminUsers from "@/pages/Admin/Users";
 import AdminMessages from "@/pages/Admin/Messages";
 import AdminAnalytics from "@/pages/Admin/Analytics";
 import AdminReviews from "@/pages/Admin/Reviews";
-
+import MusicPlayer from "@/components/musicPlayer"; // 1. Import your new player
+import ScrollToTop from "./components/ScrollToTop";
 export default function App() {
   return (
     <LanguageProvider>
       <AuthProvider>
         <DataProvider>
+          <ScrollToTop /> {/* Add this here */}
+          <MusicPlayer />
           <Routes>
             <Route element={<Layout />}>
               {/* Public Routes */}
@@ -53,11 +56,19 @@ export default function App() {
               <Route
                 element={
                   <ProtectedRoute
-                    allowedRoles={["hotel_owner", "resort_owner", "rental_owner", "guide"]}
+                    allowedRoles={[
+                      "hotel_owner",
+                      "resort_owner",
+                      "rental_owner",
+                      "guide",
+                    ]}
                   />
                 }
               >
-                <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+                <Route
+                  path="/provider/dashboard"
+                  element={<ProviderDashboard />}
+                />
               </Route>
 
               {/* Admin Routes */}

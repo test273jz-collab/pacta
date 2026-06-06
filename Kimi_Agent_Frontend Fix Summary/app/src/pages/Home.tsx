@@ -111,14 +111,17 @@ export default function Home() {
             {/* Replace the old <img> block with this */}
             {ad.video ? (
               <video
-                key={ad._id} // forces re-mount on slide change
+                key={ad._id}
                 src={ad.video}
                 poster={ad.poster}
                 autoPlay
                 muted
                 loop
                 playsInline
+                // Add these to ensure smooth handling
+                preload="auto"
                 className="absolute inset-0 w-full h-full object-cover"
+                onLoadedMetadata={(e) => e.target.play()}
               />
             ) : ad.poster ? (
               <img
@@ -148,16 +151,13 @@ export default function Home() {
               >
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-pacta-gold/20 backdrop-blur-sm border border-pacta-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-5 text-pacta-gold">
                   <Sparkles size={12} />
-                  {t("hero.featured")}
+                  {ad.category}
                 </span>
 
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white drop-shadow-sm">
                   {isRTL ? ad.titleAr : ad.titleEn}
                 </h1>
                 {/* Inside the content block, above the title */}
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 text-white/80">
-                  {ad.category}
-                </span>
 
                 <p className="text-white/75 text-base sm:text-lg font-medium mb-10 leading-relaxed max-w-lg">
                   {isRTL ? ad.descAr : ad.descEn}

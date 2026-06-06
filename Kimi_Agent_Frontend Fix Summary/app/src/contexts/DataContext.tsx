@@ -1,5 +1,15 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { categoryService, adService, providerService } from "@/services/listingService";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
+import {
+  categoryService,
+  adService,
+  providerService,
+} from "@/services/listingService";
 import type { Category, Ad, UnifiedListing } from "@/types";
 
 interface DataContextType {
@@ -27,7 +37,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const [catsRes, adsRes, provRes] = await Promise.all([
         categoryService.getAll(),
         adService.getAll(),
-        providerService.getListings({ limit: 8 }),
+        providerService.getListings({ limit: 20 }),
       ]);
 
       if (catsRes.success) setCategories(catsRes.data || []);

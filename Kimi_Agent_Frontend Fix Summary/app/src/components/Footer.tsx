@@ -6,10 +6,13 @@ export default function Footer() {
   const { t, isRTL } = useLanguage();
 
   return (
-    <footer dir={isRTL ? "rtl" : "ltr"} className="bg-pacta-navy text-white/80 relative overflow-hidden">
+    <footer
+      dir={isRTL ? "rtl" : "ltr"}
+      className="bg-pacta-navy text-white/80 relative overflow-hidden"
+    >
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-pacta-navy via-pacta-navy to-pacta-teal/30 pointer-events-none" />
-      
+
       {/* Decorative circles */}
       <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-pacta-gold/5 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-pacta-teal/10 blur-3xl pointer-events-none" />
@@ -34,7 +37,9 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 text-xs text-pacta-gold/70">
               <Heart size={12} className="fill-pacta-gold text-pacta-gold" />
-              <span>{isRTL ? "صنع بحب في الجزائر" : "Made with love in Algeria"}</span>
+              <span>
+                {isRTL ? "صنع بحب في الجزائر" : "Made with love in Algeria"}
+              </span>
             </div>
           </div>
 
@@ -46,10 +51,21 @@ export default function Footer() {
             <ul className="space-y-3">
               {["cultural", "medical", "leisure"].map((type) => (
                 <li key={type}>
-                  <Link to={`/explore?type=${type}`} className="text-sm font-medium text-white/50 hover:text-pacta-gold transition-colors duration-300">
-                    {type === "cultural" ? (isRTL ? "السياحة الثقافية" : "Cultural Tours")
-                      : type === "medical" ? (isRTL ? "السياحة العلاجية" : "Medical Stay")
-                      : (isRTL ? "الترفيه والمرح" : "Leisure & Fun")}
+                  <Link
+                    to={`/explore?category=${type}`}
+                    className="text-sm font-medium text-white/50 hover:text-pacta-gold transition-colors duration-300"
+                  >
+                    {type === "cultural"
+                      ? isRTL
+                        ? "السياحة الثقافية"
+                        : "Cultural Tours"
+                      : type === "medical"
+                        ? isRTL
+                          ? "السياحة العلاجية"
+                          : "Medical Stay"
+                        : isRTL
+                          ? "الترفيه والمرح"
+                          : "Leisure & Fun"}
                   </Link>
                 </li>
               ))}
@@ -63,13 +79,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { path: "/providers/hotel", label: isRTL ? "الفنادق المعتمدة" : "Verified Hotels" },
-                { path: "/providers/guide", label: isRTL ? "المرشدين المحليين" : "Certified Guides" },
-                { path: "/providers/resort", label: isRTL ? "المنتجعات الفاخرة" : "Premium Resorts" },
-                { path: "/providers/rental", label: isRTL ? "عقارات للإيجار" : "Home Rentals" },
+                {
+                  path: "/providers/hotel",
+                  label: isRTL ? "الفنادق المعتمدة" : "Verified Hotels",
+                },
+                {
+                  path: "/providers/guide",
+                  label: isRTL ? "المرشدين المحليين" : "Certified Guides",
+                },
+                {
+                  path: "/providers/resort",
+                  label: isRTL ? "المنتجعات الفاخرة" : "Premium Resorts",
+                },
+                {
+                  path: "/providers/rental",
+                  label: isRTL ? "عقارات للإيجار" : "Home Rentals",
+                },
               ].map((item) => (
                 <li key={item.path}>
-                  <Link to={item.path} className="text-sm font-medium text-white/50 hover:text-pacta-gold transition-colors duration-300">
+                  <Link
+                    to={item.path}
+                    className="text-sm font-medium text-white/50 hover:text-pacta-gold transition-colors duration-300"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -93,7 +124,13 @@ export default function Footer() {
                 <div className="p-2 bg-white/5 rounded-lg">
                   <Phone size={14} className="text-pacta-gold" />
                 </div>
-                <span dir="ltr">+213 (0) 23 45 67 89</span>
+                <span dir="ltr">+213 (06) 61 81 75 19</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm font-medium text-white/50">
+                <div className="p-2 bg-white/5 rounded-lg">
+                  <Phone size={14} className="text-pacta-gold" />
+                </div>
+                <span dir="ltr">+213 (07) 99 70 22 76</span>
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-white/50">
                 <div className="p-2 bg-white/5 rounded-lg">
@@ -110,8 +147,18 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} PACTA. {t("footer.rights")}
           </span>
           <div className="flex gap-6">
-            <Link to="#" className="text-xs font-medium text-white/30 hover:text-pacta-gold transition-colors duration-300">{t("footer.terms")}</Link>
-            <Link to="#" className="text-xs font-medium text-white/30 hover:text-pacta-gold transition-colors duration-300">{t("footer.privacy")}</Link>
+            <Link
+              to="#"
+              className="text-xs font-medium text-white/30 hover:text-pacta-gold transition-colors duration-300"
+            >
+              {t("footer.terms")}
+            </Link>
+            <Link
+              to="#"
+              className="text-xs font-medium text-white/30 hover:text-pacta-gold transition-colors duration-300"
+            >
+              {t("footer.privacy")}
+            </Link>
           </div>
         </div>
       </div>

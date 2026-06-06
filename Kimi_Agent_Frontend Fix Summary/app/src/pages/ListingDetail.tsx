@@ -36,7 +36,7 @@ export default function ListingDetail() {
     try {
       const [listingRes, reviewsRes, summaryRes] = await Promise.all([
         providerService.getById(id!),
-        reviewService.getByListing(id!, { limit: 5 }),
+        reviewService.getByListing(id!, { limit: 20 }),
         reviewService.getSummary(id!),
       ]);
       if (listingRes.success) setListing(listingRes.data ?? null);

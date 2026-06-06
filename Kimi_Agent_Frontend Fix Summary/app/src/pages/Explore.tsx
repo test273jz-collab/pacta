@@ -62,7 +62,7 @@ export default function Explore() {
         maxPrice: maxPrice ? Number(maxPrice) : undefined,
         sortBy,
         page,
-        limit: 12,
+        limit: 20,
       };
 
       console.log("REQUEST PARAMS:", params);

@@ -2,16 +2,15 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const User     = require("./src/models/user.model");
-const Hotel    = require("./src/models/hotel.model");
-const Resort   = require("./src/models/resort.model");
-const Rental   = require("./src/models/rental.model");
-const Guide    = require("./src/models/guide.model");
+const User        = require("./src/models/user.model");
+const Hotel       = require("./src/models/hotel.model");
+const Resort      = require("./src/models/resort.model");
+const Rental      = require("./src/models/rental.model");
+const Guide       = require("./src/models/guide.model");
 const Reservation = require("./src/models/reservation.model");
-const Review   = require("./src/models/review.model");
+const Review      = require("./src/models/review.model");
 
-// ─── Unsplash image collections (Algeria / Mediterranean / travel themed) ────
-
+// ─── Image pools ─────────────────────────────────────────────────────────────
 const hotelImgs = [
   "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
   "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800",
@@ -57,7 +56,6 @@ async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ Connected to MongoDB");
 
-  // ── Wipe existing data ──────────────────────────────────────────────────────
   await Promise.all([
     User.deleteMany({}),
     Hotel.deleteMany({}),
@@ -69,9 +67,9 @@ async function seed() {
   ]);
   console.log("🗑  Cleared existing data");
 
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
   // 1. USERS
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
 
   const admin = await User.create({
     name: "Admin Pacta",
@@ -86,7 +84,7 @@ async function seed() {
     bio: "Platform administrator",
   });
 
-  // Hotel owners
+  // ── Hotel owners (5 hotels need owners) ──────────────────────────────────
   const hotelOwners = await User.create([
     {
       name: "Karim Benali",
@@ -118,14 +116,39 @@ async function seed() {
       password: hash("Pass@1234"),
       avatar: avatarImgs[2],
       role: "hotel_owner",
-      approvalStatus: "pending",
+      approvalStatus: "approved",
       isActive: true,
       phone: "+213 550 345 678",
       location: "Constantine",
+      bio: "Gestionnaire d'hôtels haut de gamme dans l'est algérien depuis plus de 10 ans.",
+    },
+    {
+      name: "Fares Mansouri",
+      email: "fares.mansouri@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[6],
+      role: "hotel_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 661 456 111",
+      location: "Annaba",
+      bio: "Entrepreneur hôtelier spécialisé dans le tourisme côtier de l'est algérien.",
+    },
+    {
+      name: "Dalila Oukaci",
+      email: "dalila.oukaci@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[5],
+      role: "hotel_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 770 789 333",
+      location: "Ghardaïa",
+      bio: "Pionnière de l'hôtellerie saharienne dans la vallée du M'zab.",
     },
   ]);
 
-  // Resort owners
+  // ── Resort owners ─────────────────────────────────────────────────────────
   const resortOwners = await User.create([
     {
       name: "Samir Hadj",
@@ -151,9 +174,45 @@ async function seed() {
       location: "Béjaïa",
       bio: "Resort manager with expertise in eco-tourism along the Kabyle coast.",
     },
+    {
+      name: "Bilal Chergui",
+      email: "bilal.chergui@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[7],
+      role: "resort_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 550 111 222",
+      location: "Skikda",
+      bio: "Gérant de complexe thermal et wellness dans le nord-est algérien.",
+    },
+    {
+      name: "Samira Belkacem",
+      email: "samira.belkacem@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[4],
+      role: "resort_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 661 333 444",
+      location: "Tlemcen",
+      bio: "Spécialiste du tourisme religieux et culturel dans la région de Tlemcen.",
+    },
+    {
+      name: "Omar Belhadj",
+      email: "omar.belhadj@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[2],
+      role: "resort_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 770 555 666",
+      location: "Tamanrasset",
+      bio: "Opérateur de camps sahariens de luxe dans l'Ahaggar et le Tassili.",
+    },
   ]);
 
-  // Rental owners
+  // ── Rental owners ─────────────────────────────────────────────────────────
   const rentalOwners = await User.create([
     {
       name: "Rachid Meziane",
@@ -179,9 +238,45 @@ async function seed() {
       location: "Tlemcen",
       bio: "Traditional riad owner in Tlemcen — blending Andalusian heritage with modern comfort.",
     },
+    {
+      name: "Hamza Berkouk",
+      email: "hamza.berkouk@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[1],
+      role: "rental_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 770 222 333",
+      location: "Sétif",
+      bio: "Propriétaire immobilier spécialisé dans les locations proches des universités et sites historiques.",
+    },
+    {
+      name: "Souad Hadjadj",
+      email: "souad.hadjadj@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[3],
+      role: "rental_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 661 444 555",
+      location: "Ouargla",
+      bio: "Gérante de maisons d'hôtes dans les oasis du Sahara septentrional.",
+    },
+    {
+      name: "Mehdi Boukabous",
+      email: "mehdi.boukabous@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[6],
+      role: "rental_owner",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 550 777 888",
+      location: "Jijel",
+      bio: "Propriétaire de villas de standing sur la côte jijelienne.",
+    },
   ]);
 
-  // Guides
+  // ── Guides ────────────────────────────────────────────────────────────────
   const guideOwners = await User.create([
     {
       name: "Tarek Oussama",
@@ -213,14 +308,39 @@ async function seed() {
       password: hash("Pass@1234"),
       avatar: avatarImgs[0],
       role: "guide",
-      approvalStatus: "pending",
+      approvalStatus: "approved",
       isActive: true,
       phone: "+213 550 012 345",
       location: "Alger",
+      bio: "Licensed city guide specializing in the Casbah, Ottoman heritage and colonial Algiers.",
+    },
+    {
+      name: "Siham Guerroudj",
+      email: "siham.guerroudj@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[4],
+      role: "guide",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 770 345 678",
+      location: "Tlemcen",
+      bio: "Expert en tourisme religieux et islamique dans la région de Tlemcen et l'ouest algérien.",
+    },
+    {
+      name: "Nassim Djoudi",
+      email: "nassim.djoudi@pacta.dz",
+      password: hash("Pass@1234"),
+      avatar: avatarImgs[7],
+      role: "guide",
+      approvalStatus: "approved",
+      isActive: true,
+      phone: "+213 661 567 890",
+      location: "Sétif",
+      bio: "Archaeologist and heritage guide specialising in Roman ruins at Djemila and Timgad.",
     },
   ]);
 
-  // Tourists
+  // ── Tourists ──────────────────────────────────────────────────────────────
   const tourists = await User.create([
     {
       name: "Sophie Martin",
@@ -282,19 +402,21 @@ async function seed() {
     },
   ]);
 
-  console.log(`👥 Created ${1 + hotelOwners.length + resortOwners.length + rentalOwners.length + guideOwners.length + tourists.length + 1} users`);
+  console.log(`👥 Created ${1 + hotelOwners.length + resortOwners.length + rentalOwners.length + guideOwners.length + tourists.length} users`);
 
-  // ════════════════════════════════════════════════════════════════════════════
-  // 2. HOTELS
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
+  // 2. HOTELS  (5 — all 6 categories covered)
+  // ══════════════════════════════════════════════════════════════════════════
 
   const hotels = await Hotel.create([
+
+    // 1. business ─────────────────────────────────────────────────────────
     {
       owner: hotelOwners[0]._id,
       titleEn: "Sofitel Algiers Hamma Garden",
       titleAr: "سوفيتيل الجزائر حديقة الحامة",
-      descEn: "A 5-star luxury hotel nestled beside the renowned Botanical Garden of Algiers. Featuring panoramic views of the city and Mediterranean Sea, world-class dining, a spa, rooftop pool, and elegant rooms blending modern design with Andalusian heritage.",
-      descAr: "فندق فاخر من 5 نجوم بجوار الحديقة النباتية الشهيرة للجزائر. يتميز بإطلالات بانورامية على المدينة والبحر الأبيض المتوسط، ومطاعم عالمية المستوى، وسبا، وحمام سباحة على السطح.",
+      descEn: "A 5-star luxury hotel beside the Botanical Garden of Algiers. Panoramic views of the Mediterranean, world-class dining, a full spa, rooftop pool, and 12 state-of-the-art conference rooms. The definitive choice for business travellers and high-profile events in the capital.",
+      descAr: "فندق فاخر من 5 نجوم بجوار الحديقة النباتية للجزائر. إطلالات بانورامية على البحر الأبيض المتوسط، مطاعم عالمية، سبا متكامل، مسبح على السطح، و12 قاعة مؤتمرات مجهزة. الخيار الأمثل لرجال الأعمال.",
       wilaya: "Alger",
       category: "business",
       pricePerNight: 18500,
@@ -305,12 +427,14 @@ async function seed() {
       reviewCount: 142,
       isActive: true,
     },
+
+    // 2. cultural ─────────────────────────────────────────────────────────
     {
       owner: hotelOwners[0]._id,
-      titleEn: "El Djazaïr Hotel (Grand Hôtel)",
+      titleEn: "El Djazaïr Hotel — Grand Hôtel",
       titleAr: "فندق الجزائر الكبير",
-      descEn: "A historic landmark in the heart of Algiers, built in 1889. Moorish architecture, lush gardens, and impeccable service. Steps away from the famous Didouche Mourad avenue and the city's most iconic monuments.",
-      descAr: "معلم تاريخي في قلب الجزائر العاصمة، بُني عام 1889. هندسة معمارية مورية، حدائق يانعة، وخدمة لا تشوبها شائبة. على بعد خطوات من شارع ديدوش مراد الشهير.",
+      descEn: "A historic landmark in the heart of Algiers, built in 1889. Moorish architecture, lush gardens, and impeccable service. Steps from Didouche Mourad avenue and the city's iconic monuments. Guided Casbah tours depart daily from the lobby.",
+      descAr: "معلم تاريخي في قلب الجزائر العاصمة، بُني عام 1889. هندسة معمارية مورية، حدائق يانعة، وخدمة لا تشوبها شائبة. على بعد خطوات من شارع ديدوش مراد وأبرز المعالم الأثرية. جولات يومية إلى القصبة تنطلق من الردهة.",
       wilaya: "Alger",
       category: "cultural",
       pricePerNight: 12000,
@@ -321,14 +445,16 @@ async function seed() {
       reviewCount: 98,
       isActive: true,
     },
+
+    // 3. leisure ──────────────────────────────────────────────────────────
     {
       owner: hotelOwners[1]._id,
-      titleEn: "Royal Hotel Oran - MGallery",
-      titleAr: "رويال أوتيل وهران",
-      category: "business",
-      descEn: "An iconic 4-star hotel in the cultural capital of western Algeria. Magnificent colonial façade, rooftop bar overlooking the port, and a prime location near the Santa Cruz fortress and the vibrant city center.",
-      descAr: "فندق أيقوني من 4 نجوم في العاصمة الثقافية لغرب الجزائر. واجهة استعمارية رائعة، بار على السطح يطل على الميناء، وموقع مميز بالقرب من قلعة سانتا كروز.",
+      titleEn: "Royal Hotel Oran — MGallery",
+      titleAr: "رويال أوتيل وهران — إم غاليري",
+      descEn: "An iconic 4-star hotel in the cultural capital of western Algeria. Magnificent colonial façade, rooftop bar overlooking the port, outdoor pool, and a prime location near the Santa Cruz fortress and the vibrant city beaches. Ideal for leisure breaks on the Oran Riviera.",
+      descAr: "فندق أيقوني من 4 نجوم في العاصمة الثقافية لغرب الجزائر. واجهة استعمارية رائعة، بار على السطح يطل على الميناء، مسبح خارجي، وموقع مميز بالقرب من قلعة سانتا كروز والشواطئ.",
       wilaya: "Oran",
+      category: "leisure",
       pricePerNight: 9500,
       roomsAvailable: 30,
       propertyClass: 4,
@@ -337,49 +463,57 @@ async function seed() {
       reviewCount: 76,
       isActive: true,
     },
+
+    // 4. religious ────────────────────────────────────────────────────────
     {
-      owner: hotelOwners[1]._id,
-      titleEn: "Renaissance Tlemcen Hotel",
-      titleAr: "فندق رينيسانس تلمسان",
-      descEn: "Luxury 5-star property in the city of art and history. Featuring Moroccan-Andalusian architecture, a spa, outdoor pool, and direct access to the Tlemcen National Park. Perfect base for exploring the Great Mosque and El Mechouar Palace.",
-      descAr: "عقار فاخر من 5 نجوم في مدينة الفن والتاريخ. يتميز بهندسة مغربية أندلسية، وسبا، وحمام سباحة خارجي، وإمكانية الوصول المباشر إلى منتزه تلمسان الوطني.",
-      wilaya: "Tlemcen",
-      pricePerNight: 14000,
-      roomsAvailable: 12,
-      propertyClass: 5,
-      images: [hotelImgs[4], hotelImgs[0], hotelImgs[2]],
-      rating: 4.7,
-      reviewCount: 54,
+      owner: hotelOwners[3]._id,
+      titleEn: "Hôtel Seybouse — Annaba Islamic Heritage",
+      titleAr: "فندق سيبوس — التراث الإسلامي عنابة",
+      descEn: "Boutique hotel situated minutes from the Basilica of St Augustine and the historic mosques of Annaba. Specially curated religious tourism packages include guided visits to Sufi zawiyas, Islamic manuscript libraries, and the ancient city of Hippo Regius. Halal dining only.",
+      descAr: "فندق بوتيك يقع على بعد دقائق من بازيليكا القديس أوغسطين ومساجد عنابة التاريخية. باقات سياحة دينية تشمل زيارات مرشودة للزوايا الصوفية ومكتبات المخطوطات الإسلامية ومدينة هيبون الأثرية.",
+      wilaya: "Annaba",
+      category: "religious",
+      pricePerNight: 7500,
+      roomsAvailable: 20,
+      propertyClass: 3,
+      images: [hotelImgs[3], hotelImgs[0], hotelImgs[2]],
+      rating: 4.4,
+      reviewCount: 61,
       isActive: true,
     },
+
+    // 5. educational ──────────────────────────────────────────────────────
     {
-      owner: hotelOwners[2]._id,
-      titleEn: "Constantine Marriott Hotel",
-      titleAr: "فندق ماريوت قسنطينة",
-      descEn: "Perched dramatically above the famous gorges of the Rhumel River, this 5-star Marriott offers breathtaking views of the City of Bridges. Modern rooms, conference facilities, and a unique vantage point over one of Africa's most spectacular urban landscapes.",
-      descAr: "يقع بشكل درامي فوق أخاديد نهر الرمال الشهيرة، يقدم هذا الماريوت من 5 نجوم إطلالات خلابة على مدينة الجسور.",
-      wilaya: "Constantine",
-      pricePerNight: 11000,
-      roomsAvailable: 20,
-      propertyClass: 5,
-      images: [hotelImgs[3], hotelImgs[1], hotelImgs[4]],
-      rating: 4.6,
-      reviewCount: 89,
-      isActive: false, // pending approval
+      owner: hotelOwners[4]._id,
+      titleEn: "Hôtel Ghardaïa M'zab — Ksar Residence",
+      titleAr: "فندق غرداية المزاب — إقامة القصر",
+      descEn: "A unique heritage hotel in the UNESCO-listed M'zab Valley, designed following traditional Ibadite mozabite architecture. Partners with local universities for research stays, architectural study tours, and Amazigh cultural immersion programmes. An unmatched educational experience in the living museum of the Sahara.",
+      descAr: "فندق تراثي فريد في وادي مزاب المدرج على قائمة اليونسكو، مُصمَّم وفق العمارة الإباضية المزابية التقليدية. يتعاون مع الجامعات لبرامج الإقامة البحثية وجولات الدراسة المعمارية.",
+      wilaya: "Ghardaïa",
+      category: "educational",
+      pricePerNight: 8000,
+      roomsAvailable: 14,
+      propertyClass: 3,
+      images: [hotelImgs[4], hotelImgs[1], hotelImgs[3]],
+      rating: 4.7,
+      reviewCount: 43,
+      isActive: true,
     },
   ]);
 
-  // ════════════════════════════════════════════════════════════════════════════
-  // 3. RESORTS
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
+  // 3. RESORTS  (5 — all 6 categories covered)
+  // ══════════════════════════════════════════════════════════════════════════
 
   const resorts = await Resort.create([
+
+    // 1. leisure ──────────────────────────────────────────────────────────
     {
       owner: resortOwners[0]._id,
       titleEn: "Sheraton Club Des Pins Resort",
       titleAr: "منتجع شيراتون نادي الصنوبر",
-      descEn: "Algeria's premier beach resort set among towering pine forests on the shores of the Mediterranean, just 20km west of Algiers. Private beach, multiple pools, tennis courts, water sports, kids' club, and four restaurants serving international and Algerian cuisine.",
-      descAr: "المنتجع الشاطئي الأول في الجزائر، يقع وسط أشجار الصنوبر الشاهقة على شواطئ البحر الأبيض المتوسط. شاطئ خاص، مسابح متعددة، ملاعب تنس، رياضات مائية.",
+      descEn: "Algeria's premier beach resort set among towering pine forests on the Mediterranean, 20km west of Algiers. Private beach, multiple pools, tennis courts, water sports, kids' club, and four restaurants serving international and Algerian cuisine.",
+      descAr: "المنتجع الشاطئي الأول في الجزائر، وسط أشجار الصنوبر الشاهقة على البحر الأبيض المتوسط. شاطئ خاص، مسابح متعددة، ملاعب تنس، رياضات مائية، ناد للأطفال، وأربعة مطاعم.",
       wilaya: "Alger",
       category: "leisure",
       pricePerNight: 22000,
@@ -389,66 +523,91 @@ async function seed() {
       reviewCount: 203,
       isActive: true,
     },
+
+    // 2. wellness ─────────────────────────────────────────────────────────
     {
-      owner: resortOwners[0]._id,
-      titleEn: "Les Pins Maritimes Tipaza",
-      titleAr: "منتجع صنوبر البحر تيبازة",
-      category: "leisure",
-      descEn: "A stunning seaside resort near the ancient Roman ruins of Tipaza, a UNESCO World Heritage Site. Bungalow-style accommodations with sea views, an outdoor pool, beach access, and guided tours to the archaeological site. Ideal for families and history lovers.",
-      descAr: "منتجع ساحلي رائع بالقرب من أطلال تيبازة الرومانية، موقع التراث العالمي لليونسكو. إقامة على طراز البنغلو مع إطلالات على البحر، وحمام سباحة خارجي.",
-      wilaya: "Tipaza",
-      pricePerNight: 15000,
-      maxCapacity: 6,
-      images: [resortImgs[1], resortImgs[3], resortImgs[0]],
-      rating: 4.6,
-      reviewCount: 115,
-      isActive: true,
-    },
-    {
-      owner: resortOwners[1]._id,
-      titleEn: "Zina Beach Resort & Spa — Béjaïa",
-      titleAr: "منتجع وسبا زينة للشاطئ — بجاية",
-      category: "leisure",
-      descEn: "An eco-friendly resort nestled on the emerald waters of the Gulf of Béjaïa. Infinity pool, hammam, organic restaurant, and kayaking on crystal-clear Kabyle waters. Trekking packages to Gouraya National Park available.",
-      descAr: "منتجع صديق للبيئة يقع على المياه الزمردية لخليج بجاية. مسبح لانهائي، حمام، مطعم عضوي، وتجديف على المياه الكابيلية الصافية.",
-      wilaya: "Béjaïa",
-      pricePerNight: 13500,
+      owner: resortOwners[2]._id,
+      titleEn: "Hammam Bou Hanifia Thermal Resort",
+      titleAr: "منتجع حمام بوحنيفية الحراري",
+      descEn: "Algeria's most celebrated thermal spa resort, fed by natural hot springs at 47°C. Therapeutic baths treating rheumatism, skin conditions, and stress. Traditional hammam rituals, physiotherapy centre, medically supervised wellness programmes, and mountain hiking. Ideal for medical and wellness tourism.",
+      descAr: "أشهر منتجع حراري في الجزائر، تغذيه ينابيع ساخنة طبيعية بدرجة 47 درجة. حمامات علاجية لأمراض الروماتيزم والجلد والتوتر. طقوس الحمام التقليدية، مركز العلاج الطبيعي، وبرامج صحية طبية مشرف عليها.",
+      wilaya: "Mascara",
+      category: "medical",
+      pricePerNight: 9500,
       maxCapacity: 4,
-      images: [resortImgs[2], resortImgs[4], resortImgs[1]],
+      images: [resortImgs[1], resortImgs[3], resortImgs[0]],
       rating: 4.7,
-      reviewCount: 88,
+      reviewCount: 134,
       isActive: true,
     },
+
+    // 3. cultural ─────────────────────────────────────────────────────────
     {
-      owner: resortOwners[1]._id,
-      titleEn: "Doriane Beach & Aquapark — Annaba",
-      titleAr: "منتجع دوريان الشاطئ والألعاب المائية — عنابة",
-      category: "leisure",
-      descEn: "A full-service aquatic resort on the famous Seraïdi coast near Annaba. Water slides, wave pool, beach volleyball, and a seafood restaurant with panoramic views of the Gulf of Annaba. Family paradise on the northeastern Algerian coast.",
-      descAr: "منتجع مائي متكامل الخدمات على ساحل الصرايدي الشهير قرب عنابة. زلاجات مائية، بركة أمواج، كرة طائرة شاطئية، ومطعم مأكولات بحرية.",
-      wilaya: "Annaba",
-      pricePerNight: 11000,
-      maxCapacity: 10,
+      owner: resortOwners[3]._id,
+      titleEn: "Mansour Eddahbi Tlemcen — Heritage Resort",
+      titleAr: "منتجع منصور الذهبي تلمسان التراثي",
+      descEn: "Perched on the Lalla Setti plateau with panoramic views of Tlemcen's minarets and the Tlemcen National Park. Moroccan-Andalusian architecture, a museum wing displaying local Islamic art, daily guided tours to the Great Mosque and El Mechouar Palace, and a traditional couscous school.",
+      descAr: "يعلو هضبة لالة ستي مع إطلالات بانورامية على مآذن تلمسان. هندسة مغربية أندلسية، جناح متحفي للفن الإسلامي المحلي، جولات يومية للمسجد الكبير وقصر المشور، ومدرسة الكسكسى التقليدي.",
+      wilaya: "Tlemcen",
+      category: "cultural",
+      pricePerNight: 14000,
+      maxCapacity: 6,
+      images: [resortImgs[2], resortImgs[4], resortImgs[1]],
+      rating: 4.8,
+      reviewCount: 97,
+      isActive: true,
+    },
+
+    // 4. religious ────────────────────────────────────────────────────────
+    {
+      owner: resortOwners[3]._id,
+      titleEn: "Zianid Zawiya Retreat — Tlemcen",
+      titleAr: "ملجأ الزاوية الزيانية — تلمسان",
+      descEn: "A tranquil spiritual retreat hotel adjacent to the revered Sidi Boumediene zawiya complex in Tlemcen. Designed for religious tourism and spiritual reflection. Packages include Quran study circles, guided pilgrimage to the Sidi Boumediene shrine, and Sufi music evenings. Halal certified, prayer rooms on every floor.",
+      descAr: "ملجأ روحاني هادئ مجاور لزاوية سيدي بومدين العريقة في تلمسان. مصمم للسياحة الدينية والتأمل الروحي. باقات تشمل حلقات تحفيظ القرآن وزيارة ضريح سيدي بومدين وأمسيات الموسيقى الصوفية.",
+      wilaya: "Tlemcen",
+      category: "religious",
+      pricePerNight: 7000,
+      maxCapacity: 4,
       images: [resortImgs[3], resortImgs[0], resortImgs[2]],
-      rating: 4.4,
-      reviewCount: 67,
+      rating: 4.6,
+      reviewCount: 58,
+      isActive: true,
+    },
+
+    // 5. educational ──────────────────────────────────────────────────────
+    {
+      owner: resortOwners[4]._id,
+      titleEn: "Tamanrasset Hoggar Explorer Camp",
+      titleAr: "مخيم مستكشف الهقار — تمنراست",
+      descEn: "A luxury desert research camp at the foot of the Hoggar Mountains. Purpose-built for educational expeditions: geology field schools, prehistoric rock art study programmes, astronomy nights under Saharan skies, and ethnographic workshops with Tuareg communities. University partnerships welcome.",
+      descAr: "مخيم بحثي صحراوي فاخر عند سفح جبال الهقار. مخصص للبعثات التعليمية: مدارس الجيولوجيا الميدانية، برامج دراسة الفن الصخري ما قبل التاريخ، ليالي الفلك تحت سماء الصحراء، وورش أنثروبولوجية مع مجتمعات الطوارق.",
+      wilaya: "Tamanrasset",
+      category: "educational",
+      pricePerNight: 16000,
+      maxCapacity: 12,
+      images: [resortImgs[4], resortImgs[2], resortImgs[0]],
+      rating: 4.9,
+      reviewCount: 49,
       isActive: true,
     },
   ]);
 
-  // ════════════════════════════════════════════════════════════════════════════
-  // 4. RENTALS
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
+  // 4. RENTALS  (5 — all 6 categories covered)
+  // ══════════════════════════════════════════════════════════════════════════
 
   const rentals = await Rental.create([
+
+    // 1. business ─────────────────────────────────────────────────────────
     {
       owner: rentalOwners[0]._id,
       titleEn: "Luxury Penthouse — Hydra, Algiers",
       titleAr: "شقة بنتهاوس فاخرة — حيدرة، الجزائر",
-      category: "business",
-      descEn: "Stunning 3-bedroom penthouse in the prestigious Hydra neighborhood of Algiers. Sweeping views of the Bay of Algiers from a private terrace. Fully equipped modern kitchen, designer furniture, fiber internet, underground parking. Walking distance to embassies and top restaurants.",
-      descAr: "شقة بنتهاوس مذهلة من 3 غرف نوم في حي حيدرة الراقي بالجزائر. إطلالات بانورامية على خليج الجزائر من شرفة خاصة. مطبخ حديث مجهز بالكامل، أثاث مصمم.",
+      descEn: "Stunning 3-bedroom penthouse in the prestigious Hydra neighbourhood. Sweeping Bay of Algiers views from a private terrace, designer furniture, fibre internet, co-working desk, underground parking. Walking distance to embassies and top business restaurants.",
+      descAr: "شقة بنتهاوس مذهلة من 3 غرف نوم في حي حيدرة الراقي. إطلالات على خليج الجزائر من شرفة خاصة، أثاث مصمم، إنترنت ألياف ضوئية، مكتب عمل، وموقف سيارات تحت الأرض.",
       wilaya: "Alger",
+      category: "business",
       pricePerNight: 8500,
       structure: { type: "apartment", roomsCount: 3, bedsCount: 4, bathroomsCount: 2, maxGuests: 6 },
       images: rentalImgs,
@@ -456,29 +615,33 @@ async function seed() {
       reviewCount: 37,
       isActive: true,
     },
+
+    // 2. leisure ──────────────────────────────────────────────────────────
     {
-      owner: rentalOwners[0]._id,
-      titleEn: "Sea-View Studio — Sidi Fredj Marina",
+      owner: rentalOwners[4]._id,
+      titleEn: "Beachfront Villa — Jijel Corniche",
+      titleAr: "فيلا على الشاطئ — كورنيش جيجل",
+      descEn: "Spacious 4-bedroom villa with private pool and direct access to the crystal-clear waters of Jijel's famous corniche. Outdoor dining terrace, sun deck, BBQ, kayaks included. Surrounded by Mediterranean pine forests — the perfect leisure escape for families.",
+      descAr: "فيلا واسعة من 4 غرف نوم مع مسبح خاص وإمكانية الوصول المباشر إلى مياه كورنيش جيجل الصافية. شرفة لتناول الطعام في الهواء الطلق، سطح شمسي، شواء، وكاياك مدرج. المنجأ الترفيهي المثالي للعائلات.",
+      wilaya: "Jijel",
       category: "leisure",
-      titleAr: "استوديو بإطلالة بحرية — مارينا سيدي فرج",
-      descEn: "A cozy studio apartment at the Sidi Fredj Marina complex, 30 minutes west of Algiers. Direct sea view, private balcony, fully equipped kitchenette, free parking. Ideal for couples or solo travelers seeking tranquility near the water.",
-      descAr: "شقة استوديو مريحة في مجمع مارينا سيدي فرج، 30 دقيقة غرب الجزائر. إطلالة مباشرة على البحر، شرفة خاصة، مطبخ صغير مجهز بالكامل.",
-      wilaya: "Alger",
-      pricePerNight: 4500,
-      structure: { type: "studio", roomsCount: 1, bedsCount: 1, bathroomsCount: 1, maxGuests: 2 },
-      images: [rentalImgs[1], rentalImgs[3], rentalImgs[0]],
-      rating: 4.6,
-      reviewCount: 52,
+      pricePerNight: 10000,
+      structure: { type: "villa", roomsCount: 4, bedsCount: 5, bathroomsCount: 3, maxGuests: 10 },
+      images: [rentalImgs[1], rentalImgs[3], rentalImgs[4]],
+      rating: 4.8,
+      reviewCount: 55,
       isActive: true,
     },
+
+    // 3. cultural ─────────────────────────────────────────────────────────
     {
       owner: rentalOwners[1]._id,
       titleEn: "Traditional Riad — Old Medina, Tlemcen",
       titleAr: "رياض تقليدي — المدينة القديمة، تلمسان",
-      category: "cultural",
-      descEn: "An authentically restored Andalusian riad in the heart of Tlemcen's ancient medina. Mosaic tiled courtyard, carved cedarwood ceilings, 4 en-suite rooms, and a rooftop terrace with views of the Grand Mosque minaret. A rare living heritage experience.",
-      descAr: "رياض أندلسي مُرمَّم بأصالة في قلب المدينة القديمة بتلمسان. فناء مبلط بالفسيفساء، أسقف خشب الأرز المنحوتة، 4 غرف مع حمامات خاصة.",
+      descEn: "An authentically restored Andalusian riad in the heart of Tlemcen's ancient medina. Mosaic tiled courtyard, carved cedarwood ceilings, 4 en-suite rooms, and a rooftop terrace with views of the Grand Mosque minaret. Cooking classes and medina walking tours included on request.",
+      descAr: "رياض أندلسي مُرمَّم بأصالة في قلب المدينة القديمة بتلمسان. فناء مبلط بالفسيفساء، أسقف خشب الأرز المنحوتة، 4 غرف بحمامات خاصة، وشرفة علوية بإطلالة على مئذنة المسجد الكبير.",
       wilaya: "Tlemcen",
+      category: "cultural",
       pricePerNight: 7000,
       structure: { type: "villa", roomsCount: 4, bedsCount: 4, bathroomsCount: 4, maxGuests: 8 },
       images: [rentalImgs[2], rentalImgs[4], rentalImgs[1]],
@@ -486,48 +649,57 @@ async function seed() {
       reviewCount: 44,
       isActive: true,
     },
+
+    // 4. religious ────────────────────────────────────────────────────────
     {
-      owner: rentalOwners[1]._id,
-      titleEn: "Modern Villa — Oran Seaside",
-      titleAr: "فيلا عصرية — ساحل وهران",
-      descEn: "Spacious 5-bedroom villa with private pool and direct beach access on the outskirts of Oran. Fully equipped smart home, BBQ terrace, outdoor dining area, and secure gated garden. Perfect for large family gatherings or friend groups.",
-      descAr: "فيلا واسعة من 5 غرف نوم مع مسبح خاص وإمكانية الوصول المباشر إلى الشاطئ على أطراف وهران. منزل ذكي مجهز بالكامل، شرفة للشواء.",
-      wilaya: "Oran",
-      pricePerNight: 12000,
-      structure: { type: "villa", roomsCount: 5, bedsCount: 6, bathroomsCount: 3, maxGuests: 12 },
-      images: [rentalImgs[4], rentalImgs[2], rentalImgs[0]],
+      owner: rentalOwners[3]._id,
+      titleEn: "Saharan Ksar Guesthouse — Ghardaïa",
+      titleAr: "دار ضيافة القصر الصحراوي — غرداية",
+      descEn: "A restored traditional ksar (fortified house) in the UNESCO M'zab Valley. Rooms decorated with authentic Mozabite tilework and hand-woven textiles. Walking distance to the Friday Mosque of Ghardaïa. Host offers guided visits to local zawiyas and Islamic schools. Ideal for religious and spiritual travellers.",
+      descAr: "قصر تقليدي مُرمَّم في وادي مزاب المدرج على قائمة اليونسكو. غرف مزينة بالبلاط المزابي الأصيل والمنسوجات اليدوية. على مسافة المشي من مسجد غرداية الجمعة. المضيف يوفر زيارات مرشودة للزوايا والمدارس الإسلامية.",
+      wilaya: "Ghardaïa",
+      category: "religious",
+      pricePerNight: 5000,
+      structure: { type: "villa", roomsCount: 3, bedsCount: 3, bathroomsCount: 2, maxGuests: 6 },
+      images: [rentalImgs[0], rentalImgs[2], rentalImgs[3]],
       rating: 4.7,
-      reviewCount: 29,
+      reviewCount: 32,
       isActive: true,
     },
+
+    // 5. educational ──────────────────────────────────────────────────────
     {
-      owner: rentalOwners[0]._id,
-      titleEn: "Mountain Chalet — Chrea National Park",
-      titleAr: "شاليه جبلي — منتزه شريعة الوطني",
-      descEn: "A charming alpine chalet in the cedar forests of Chrea, 1,500m altitude in the Blida Atlas. Wood-burning fireplace, outdoor hot tub with mountain views, ski access in winter, hiking trails in summer. Sleeps 6.",
-      descAr: "شاليه جبلي ساحر في غابات أرز شريعة، على ارتفاع 1500 متر في أطلس البليدة. مدفأة خشبية، جاكوزي خارجي بإطلالة على الجبال، وصول لمسارات التزلج شتاءً.",
-      wilaya: "Blida",
-      pricePerNight: 6500,
-      structure: { type: "chalet", roomsCount: 3, bedsCount: 3, bathroomsCount: 2, maxGuests: 6 },
-      images: [rentalImgs[0], rentalImgs[3], rentalImgs[2]],
-      rating: 4.9,
-      reviewCount: 61,
+      owner: rentalOwners[2]._id,
+      titleEn: "University District Flat — Sétif Campus",
+      titleAr: "شقة الحي الجامعي — حرم سطيف",
+      descEn: "A well-equipped modern apartment 5 minutes from Ferhat Abbas University of Sétif and 30 minutes from the Roman ruins of Djemila (UNESCO). Fast WiFi, study room, full kitchen, and a quiet neighbourhood. Ideal for researchers, exchange students, and educational tourists visiting the archaeological sites of the Hauts Plateaux.",
+      descAr: "شقة حديثة مجهزة جيدًا على بعد 5 دقائق من جامعة فرحات عباس بسطيف و30 دقيقة من أطلال جميلة الرومانية (يونسكو). واي فاي سريع، غرفة دراسة، مطبخ كامل وحي هادئ. مثالية للباحثين وطلاب التبادل.",
+      wilaya: "Sétif",
+      category: "educational",
+      pricePerNight: 3500,
+      structure: { type: "apartment", roomsCount: 2, bedsCount: 2, bathroomsCount: 1, maxGuests: 4 },
+      images: [rentalImgs[3], rentalImgs[0], rentalImgs[2]],
+      rating: 4.5,
+      reviewCount: 28,
       isActive: true,
     },
   ]);
 
-  // ════════════════════════════════════════════════════════════════════════════
-  // 5. GUIDES
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
+  // 5. GUIDES  (5 — all 6 categories covered)
+  // ══════════════════════════════════════════════════════════════════════════
 
   const guides = await Guide.create([
+
+    // 1. leisure (Sahara adventure) ───────────────────────────────────────
     {
       owner: guideOwners[0]._id,
       nameEn: "Tarek — Sahara & Hoggar Expert",
       nameAr: "طارق — خبير الصحراء والهقار",
-      expertiseEn: "Certified desert guide with 12 years navigating Tassili N'Ajjer (UNESCO), Hoggar Mountains, and Ahaggar National Park. Specializes in camel treks, 4WD expeditions, rock art tours, and Tuareg cultural immersion experiences.",
-      expertiseAr: "مرشد صحراوي معتمد بخبرة 12 عامًا في استكشاف تاسيلي ناجر (يونسكو)، جبال الهقار، والمنتزه الوطني للأهقار. متخصص في رحلات الجمال والرحلات الثقافية الطوارقية.",
+      expertiseEn: "Certified desert guide with 12 years navigating Tassili N'Ajjer (UNESCO), Hoggar Mountains, and Ahaggar National Park. Specialises in camel treks, 4WD expeditions, dune bivouacs, rock art tours, and Tuareg cultural immersion. Multi-day packages from 3 to 21 days.",
+      expertiseAr: "مرشد صحراوي معتمد بخبرة 12 عامًا في استكشاف تاسيلي ناجر (يونسكو)، جبال الهقار، والمنتزه الوطني للأهقار. متخصص في رحلات الجمال والبيفواك على الكثبان وجولات الفن الصخري والغمر الثقافي الطوارقي.",
       wilaya: "Tamanrasset",
+      category: "leisure",
       pricePerDay: 8500,
       maxGroupSize: 8,
       languagesSpoken: ["ar", "fr", "en", "Tamasheq"],
@@ -537,13 +709,16 @@ async function seed() {
       reviewCount: 94,
       isActive: true,
     },
+
+    // 2. cultural (Kabyle mountains) ──────────────────────────────────────
     {
       owner: guideOwners[1]._id,
-      nameEn: "Lydia — Kabyle Mountains & Culture",
+      nameEn: "Lydia — Kabyle Mountains & Amazigh Culture",
       nameAr: "ليديا — جبال القبائل والثقافة الأمازيغية",
-      expertiseEn: "Native Kabyle guide and cultural anthropologist. Leads authentic village stays, Djurdjura National Park treks (2,308m peak), traditional Amazigh craft workshops, olive harvest experiences, and Berber culinary tours in the heart of Greater Kabylie.",
-      expertiseAr: "مرشدة كابيلية أصيلة وعالمة أنثروبولوجيا ثقافية. تقود إقامات قروية أصيلة، ورحلات في منتزه جرجرة الوطني، وورش الحرف الأمازيغية التقليدية.",
+      expertiseEn: "Native Kabyle guide and cultural anthropologist. Leads authentic village stays, Djurdjura National Park treks (2,308m peak), traditional Amazigh craft workshops, olive harvest experiences, and Berber culinary tours. All tours support local women's cooperatives.",
+      expertiseAr: "مرشدة كابيلية أصيلة وعالمة أنثروبولوجيا ثقافية. تقود إقامات قروية أصيلة، ورحلات في منتزه جرجرة الوطني، وورش الحرف الأمازيغية التقليدية. جميع الجولات تدعم التعاونيات النسائية المحلية.",
       wilaya: "Tizi Ouzou",
+      category: "cultural",
       pricePerDay: 5500,
       maxGroupSize: 6,
       languagesSpoken: ["ar", "fr", "en", "Tamazight"],
@@ -553,21 +728,62 @@ async function seed() {
       reviewCount: 72,
       isActive: true,
     },
+
+    // 3. business (Algiers city & networking) ─────────────────────────────
     {
       owner: guideOwners[2]._id,
-      nameEn: "Hichem — Algiers History & Casbah",
-      nameAr: "هشام — تاريخ الجزائر والقصبة",
-      expertiseEn: "Algiers-born historian and licensed city guide. Specializes in the UNESCO-listed Kasbah of Algiers, Ottoman palaces, colonial architecture, street art, and local food markets. Half-day and full-day tours available. Evening sunset tours from Notre Dame d'Afrique.",
-      expertiseAr: "مؤرخ من الجزائر ومرشد مدني مرخص. متخصص في قصبة الجزائر المدرجة على قائمة اليونسكو، القصور العثمانية، والعمارة الاستعمارية.",
+      nameEn: "Hichem — Algiers City, History & Business Tours",
+      nameAr: "هشام — جولات المدينة والتاريخ والأعمال في الجزائر",
+      expertiseEn: "Licensed Algiers city guide and business travel consultant. Specialises in the UNESCO Kasbah, Ottoman palaces, colonial architecture, and curated business-networking day tours connecting visiting executives with local entrepreneurs, trade fair logistics, and corporate event co-ordination.",
+      expertiseAr: "مرشد مدني مرخص ومستشار سفر أعمال في الجزائر. متخصص في قصبة الجزائر المدرجة على قائمة اليونسكو، القصور العثمانية، والجولات التجارية المنسقة التي تربط المديرين الزائرين بالمقاولين المحليين.",
       wilaya: "Alger",
-      pricePerDay: 4000,
+      category: "business",
+      pricePerDay: 4500,
       maxGroupSize: 12,
       languagesSpoken: ["ar", "fr", "en"],
-      specializations: ["Casbah tours", "Ottoman history", "Street food", "Colonial architecture", "Photography tours"],
+      specializations: ["Casbah tours", "Ottoman history", "Business networking", "Corporate events", "Trade fair logistics"],
       images: [guideImgs[2], guideImgs[4], guideImgs[1]],
       rating: 4.7,
       reviewCount: 48,
-      isActive: false, // pending
+      isActive: true,
+    },
+
+    // 4. religious ────────────────────────────────────────────────────────
+    {
+      owner: guideOwners[3]._id,
+      nameEn: "Siham — Islamic Heritage & Spiritual Tours — Tlemcen",
+      nameAr: "سيهام — جولات التراث الإسلامي والسياحة الروحية — تلمسان",
+      expertiseEn: "Specialist guide in Islamic religious tourism across western Algeria. Leads in-depth visits to the Great Mosque of Tlemcen (12th century), El Mechouar Palace, the Mansourah ruins, Sufi zawiya circuits, and the Sidi Boumediene shrine. Half-day and multi-day spiritual itineraries available in Arabic, French, and English.",
+      expertiseAr: "مرشدة متخصصة في السياحة الدينية الإسلامية في غرب الجزائر. تقود زيارات معمقة للمسجد الكبير بتلمسان (القرن الثاني عشر)، قصر المشور، أطلال المنصورة، مسارات الزوايا الصوفية، وضريح سيدي بومدين.",
+      wilaya: "Tlemcen",
+      category: "religious",
+      pricePerDay: 4000,
+      maxGroupSize: 15,
+      languagesSpoken: ["ar", "fr", "en"],
+      specializations: ["Islamic architecture", "Sufi zawiyas", "Shrine visits", "Mosque history", "Spiritual itineraries"],
+      images: [guideImgs[3], guideImgs[0], guideImgs[2]],
+      rating: 4.8,
+      reviewCount: 63,
+      isActive: true,
+    },
+
+    // 5. educational (Roman ruins & archaeology) ──────────────────────────
+    {
+      owner: guideOwners[4]._id,
+      nameEn: "Nassim — Roman Ruins & Archaeological Tours",
+      nameAr: "نسيم — جولات الأطلال الرومانية والآثار",
+      expertiseEn: "Archaeologist and licensed heritage guide with a doctorate in Roman North Africa. Leads expert tours of Djemila (UNESCO), Timgad (UNESCO), Tipaza (UNESCO), and Cherchell Museum. Tailors programmes for university groups, school expeditions, and independent researchers. Co-author of the Algerian Roman Sites field guide.",
+      expertiseAr: "عالم آثار ومرشد تراث مرخص بدكتوراه في شمال أفريقيا الروماني. يقود جولات متخصصة في جميلة (يونسكو) وتيمقاد (يونسكو) وتيبازة (يونسكو) ومتحف شرشال. يصمم برامج مخصصة للمجموعات الجامعية والبعثات المدرسية.",
+      wilaya: "Sétif",
+      category: "educational",
+      pricePerDay: 6000,
+      maxGroupSize: 20,
+      languagesSpoken: ["ar", "fr", "en"],
+      specializations: ["Roman archaeology", "UNESCO sites", "Field schools", "Museum tours", "Research expeditions"],
+      images: [guideImgs[4], guideImgs[2], guideImgs[0]],
+      rating: 4.9,
+      reviewCount: 57,
+      isActive: true,
     },
   ]);
 
@@ -576,23 +792,22 @@ async function seed() {
   console.log(`🏠 Created ${rentals.length} rentals`);
   console.log(`🗺  Created ${guides.length} guides`);
 
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
   // 6. RESERVATIONS
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
 
   const past   = (d) => { const dt = new Date(); dt.setDate(dt.getDate() - d); return dt; };
   const future = (d) => { const dt = new Date(); dt.setDate(dt.getDate() + d); return dt; };
 
   const reservations = await Reservation.create([
-    // Completed reservations (tourists will review these)
+    // ── completed (will get reviews) ──────────────────────────────────────
     {
       tourist: tourists[0]._id,
       provider: hotelOwners[0]._id,
       listingId: hotels[0]._id,
       listingModel: "Hotel",
       status: "completed",
-      startDate: past(30),
-      endDate: past(25),
+      startDate: past(30), endDate: past(25),
       totalPrice: 92500,
       guestCount: 2,
       specialRequests: "Late check-in please, arriving after midnight.",
@@ -604,8 +819,7 @@ async function seed() {
       listingId: resorts[0]._id,
       listingModel: "Resort",
       status: "completed",
-      startDate: past(20),
-      endDate: past(16),
+      startDate: past(20), endDate: past(16),
       totalPrice: 88000,
       guestCount: 4,
       paymentStatus: "paid",
@@ -616,8 +830,7 @@ async function seed() {
       listingId: rentals[2]._id,
       listingModel: "Rental",
       status: "completed",
-      startDate: past(15),
-      endDate: past(10),
+      startDate: past(15), endDate: past(10),
       totalPrice: 35000,
       guestCount: 3,
       specialRequests: "We'd love a traditional welcome with mint tea if possible!",
@@ -629,72 +842,88 @@ async function seed() {
       listingId: guides[0]._id,
       listingModel: "Guide",
       status: "completed",
-      startDate: past(10),
-      endDate: past(7),
+      startDate: past(10), endDate: past(7),
       totalPrice: 25500,
-      guestCount: 2,
-      paymentStatus: "paid",
-    },
-    // Confirmed (upcoming)
-    {
-      tourist: tourists[0]._id,
-      provider: resortOwners[1]._id,
-      listingId: resorts[2]._id,
-      listingModel: "Resort",
-      status: "confirmed",
-      startDate: future(5),
-      endDate: future(10),
-      totalPrice: 67500,
       guestCount: 2,
       paymentStatus: "paid",
     },
     {
       tourist: tourists[4]._id,
-      provider: rentalOwners[0]._id,
-      listingId: rentals[0]._id,
+      provider: guideOwners[3]._id,
+      listingId: guides[3]._id,
+      listingModel: "Guide",
+      status: "completed",
+      startDate: past(8), endDate: past(6),
+      totalPrice: 8000,
+      guestCount: 1,
+      paymentStatus: "paid",
+    },
+    // ── confirmed (upcoming) ──────────────────────────────────────────────
+    {
+      tourist: tourists[0]._id,
+      provider: resortOwners[2]._id,
+      listingId: resorts[1]._id,
+      listingModel: "Resort",
+      status: "confirmed",
+      startDate: future(5), endDate: future(10),
+      totalPrice: 47500,
+      guestCount: 2,
+      paymentStatus: "paid",
+    },
+    {
+      tourist: tourists[2]._id,
+      provider: rentalOwners[4]._id,
+      listingId: rentals[1]._id,
       listingModel: "Rental",
       status: "confirmed",
-      startDate: future(3),
-      endDate: future(7),
-      totalPrice: 34000,
+      startDate: future(3), endDate: future(8),
+      totalPrice: 50000,
       guestCount: 4,
       paymentStatus: "paid",
     },
-    // Pending
+    {
+      tourist: tourists[3]._id,
+      provider: guideOwners[4]._id,
+      listingId: guides[4]._id,
+      listingModel: "Guide",
+      status: "confirmed",
+      startDate: future(7), endDate: future(9),
+      totalPrice: 12000,
+      guestCount: 3,
+      paymentStatus: "paid",
+    },
+    // ── pending ───────────────────────────────────────────────────────────
     {
       tourist: tourists[1]._id,
-      provider: hotelOwners[1]._id,
-      listingId: hotels[2]._id,
+      provider: hotelOwners[3]._id,
+      listingId: hotels[3]._id,
       listingModel: "Hotel",
       status: "pending",
-      startDate: future(10),
-      endDate: future(14),
-      totalPrice: 38000,
+      startDate: future(10), endDate: future(14),
+      totalPrice: 30000,
       guestCount: 2,
       paymentStatus: "pending",
     },
     {
-      tourist: tourists[2]._id,
-      provider: guideOwners[1]._id,
-      listingId: guides[1]._id,
-      listingModel: "Guide",
+      tourist: tourists[4]._id,
+      provider: rentalOwners[2]._id,
+      listingId: rentals[4]._id,
+      listingModel: "Rental",
       status: "pending",
-      startDate: future(7),
-      endDate: future(9),
-      totalPrice: 11000,
-      guestCount: 1,
+      startDate: future(12), endDate: future(16),
+      totalPrice: 14000,
+      guestCount: 2,
       paymentStatus: "pending",
     },
-    // Cancelled
+    // ── cancelled ─────────────────────────────────────────────────────────
     {
       tourist: tourists[3]._id,
       provider: rentalOwners[0]._id,
-      listingId: rentals[4]._id,
+      listingId: rentals[0]._id,
       listingModel: "Rental",
       status: "cancelled",
-      startDate: past(5),
-      endDate: past(2),
-      totalPrice: 19500,
+      startDate: past(5), endDate: past(2),
+      totalPrice: 25500,
       guestCount: 3,
       paymentStatus: "refunded",
     },
@@ -702,9 +931,9 @@ async function seed() {
 
   console.log(`📅 Created ${reservations.length} reservations`);
 
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
   // 7. REVIEWS  (only for completed reservations)
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
 
   const reviewMedia = [
     { url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600", type: "image" },
@@ -731,7 +960,7 @@ async function seed() {
       listingId: resorts[0]._id,
       listingModel: "Resort",
       rating: 5,
-      comment: "منتجع شيراتون نادي الصنوبر هو ببساطة الأفضل في الجزائر! أمضينا 4 أيام رائعة. الشاطئ الخاص نظيف ومريح، والمسبح الرئيسي مذهل. الطعام في مطعم البحر لا يوصف، خاصة طبق الجمبري المشوي. فريق العمل ودود للغاية وسريع الاستجابة. تجربة لا تُنسى لكل العائلة!",
+      comment: "منتجع شيراتون نادي الصنوبر هو ببساطة الأفضل في الجزائر! أمضينا 4 أيام رائعة. الشاطئ الخاص نظيف ومريح، والمسبح الرئيسي مذهل. الطعام لا يوصف، خاصة طبق الجمبري المشوي. فريق العمل ودود للغاية وسريع الاستجابة. تجربة لا تُنسى لكل العائلة!",
       media: [reviewMedia[1], reviewMedia[2]],
       isApproved: true,
       isVerifiedTrip: true,
@@ -743,7 +972,7 @@ async function seed() {
       listingId: rentals[2]._id,
       listingModel: "Rental",
       rating: 5,
-      comment: "The Tlemcen Riad was a once-in-a-lifetime experience. Waking up to the sound of the adhan from the Grand Mosque minaret, sipping mint tea in the mosaic courtyard, the carved cedar ceilings... It felt like sleeping inside a work of art. Amina was an incredible host — she arranged a private cooking class and a guided tour of the medina. Highly recommended for anyone who wants to experience authentic Algerian heritage.",
+      comment: "The Tlemcen Riad was a once-in-a-lifetime experience. Waking up to the adhan from the Grand Mosque minaret, sipping mint tea in the mosaic courtyard, the carved cedar ceilings… It felt like sleeping inside a work of art. Amina arranged a private cooking class and a guided medina tour. Highly recommended for anyone who wants authentic Algerian heritage.",
       media: [reviewMedia[0], reviewMedia[2]],
       isApproved: true,
       isVerifiedTrip: true,
@@ -755,33 +984,64 @@ async function seed() {
       listingId: guides[0]._id,
       listingModel: "Guide",
       rating: 5,
-      comment: "طارق مرشد استثنائي بكل معنى الكلمة! رحلة 3 أيام في تاسيلي ناجر كانت من أجمل تجارب حياتي. معرفته بالفن الصخري الآلاف السنين والثقافة الطوارقية عميقة ومذهلة. تنظيم مثالي، معدات عالية الجودة، وطبخ صحراوي رائع حول النار. يستحق كل دينار وأكثر. أنصح به بشدة لكل من يريد اكتشاف الصحراء الجزائرية!",
+      comment: "طارق مرشد استثنائي بكل معنى الكلمة! رحلة 3 أيام في تاسيلي ناجر كانت من أجمل تجارب حياتي. معرفته بالفن الصخري الآلاف السنين والثقافة الطوارقية عميقة ومذهلة. تنظيم مثالي، معدات عالية الجودة، وطبخ صحراوي رائع حول النار. أنصح به بشدة لكل من يريد اكتشاف الصحراء الجزائرية!",
       isApproved: true,
       isVerifiedTrip: true,
       helpfulCount: 42,
     },
+    {
+      tourist: tourists[4]._id,
+      reservation: reservations[4]._id,
+      listingId: guides[3]._id,
+      listingModel: "Guide",
+      rating: 5,
+      comment: "جولة سيهام في تلمسان كانت تجربة روحية عميقة. زرنا المسجد الكبير وضريح سيدي بومدين والمدرسة التاشفينية — كل موقع شرحته بعمق وعشق حقيقي للتراث. الأسلوب رائع والمعلومات التاريخية ثرية جداً. أنصح بها بشدة لكل محب للسياحة الدينية والإسلامية.",
+      isApproved: true,
+      isVerifiedTrip: true,
+      helpfulCount: 29,
+    },
   ]);
 
-  console.log("⭐ Created 4 reviews");
+  console.log("⭐ Created 5 reviews");
 
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
   // SUMMARY
-  // ════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
 
-  console.log("\n═══════════════════════════════════════════");
+  console.log("\n═══════════════════════════════════════════════════════");
   console.log("✅  SEED COMPLETE — Login credentials:");
-  console.log("═══════════════════════════════════════════");
-  console.log("👑 Admin        → admin@pacta.dz          / Admin@123");
-  console.log("🏨 Hotel owner  → karim.benali@pacta.dz   / Pass@1234");
-  console.log("🏨 Hotel owner  → yasmine.khelil@pacta.dz / Pass@1234");
-  console.log("🌴 Resort owner → samir.hadj@pacta.dz     / Pass@1234");
-  console.log("🏠 Rental owner → rachid.meziane@pacta.dz / Pass@1234");
-  console.log("🏠 Rental owner → amina.chabane@pacta.dz  / Pass@1234");
-  console.log("🗺  Guide        → tarek.oussama@pacta.dz  / Pass@1234");
-  console.log("🗺  Guide        → lydia.mammeri@pacta.dz  / Pass@1234");
-  console.log("✈️  Tourist      → sophie.martin@gmail.com / Pass@1234");
-  console.log("✈️  Tourist      → ahmed.khalil@gmail.com  / Pass@1234");
-  console.log("═══════════════════════════════════════════\n");
+  console.log("═══════════════════════════════════════════════════════");
+  console.log("👑 Admin         → admin@pacta.dz              / Admin@123");
+  console.log("─────────────────────────────────────────────────────");
+  console.log("🏨 Hotel owner   → karim.benali@pacta.dz       / Pass@1234  (Sofitel + El Djazaïr)");
+  console.log("🏨 Hotel owner   → yasmine.khelil@pacta.dz     / Pass@1234  (Royal Oran)");
+  console.log("🏨 Hotel owner   → mourad.touati@pacta.dz      / Pass@1234");
+  console.log("🏨 Hotel owner   → fares.mansouri@pacta.dz     / Pass@1234  (Annaba religious)");
+  console.log("🏨 Hotel owner   → dalila.oukaci@pacta.dz      / Pass@1234  (Ghardaïa educational)");
+  console.log("─────────────────────────────────────────────────────");
+  console.log("🌴 Resort owner  → samir.hadj@pacta.dz         / Pass@1234  (Club Des Pins)");
+  console.log("🌴 Resort owner  → bilal.chergui@pacta.dz      / Pass@1234  (Hammam Bou Hanifia)");
+  console.log("🌴 Resort owner  → samira.belkacem@pacta.dz    / Pass@1234  (Tlemcen cultural + religious)");
+  console.log("🌴 Resort owner  → omar.belhadj@pacta.dz       / Pass@1234  (Hoggar educational camp)");
+  console.log("─────────────────────────────────────────────────────");
+  console.log("🏠 Rental owner  → rachid.meziane@pacta.dz     / Pass@1234  (Hydra penthouse)");
+  console.log("🏠 Rental owner  → amina.chabane@pacta.dz      / Pass@1234  (Tlemcen riad)");
+  console.log("🏠 Rental owner  → hamza.berkouk@pacta.dz      / Pass@1234  (Sétif university flat)");
+  console.log("🏠 Rental owner  → souad.hadjadj@pacta.dz      / Pass@1234  (Ghardaïa ksar)");
+  console.log("🏠 Rental owner  → mehdi.boukabous@pacta.dz    / Pass@1234  (Jijel villa)");
+  console.log("─────────────────────────────────────────────────────");
+  console.log("🗺  Guide         → tarek.oussama@pacta.dz      / Pass@1234  (Sahara leisure)");
+  console.log("🗺  Guide         → lydia.mammeri@pacta.dz      / Pass@1234  (Kabyle cultural)");
+  console.log("🗺  Guide         → hichem.rahmani@pacta.dz     / Pass@1234  (Algiers business)");
+  console.log("🗺  Guide         → siham.guerroudj@pacta.dz    / Pass@1234  (Tlemcen religious)");
+  console.log("🗺  Guide         → nassim.djoudi@pacta.dz      / Pass@1234  (Roman ruins educational)");
+  console.log("─────────────────────────────────────────────────────");
+  console.log("✈️  Tourist       → sophie.martin@gmail.com      / Pass@1234");
+  console.log("✈️  Tourist       → ahmed.khalil@gmail.com       / Pass@1234");
+  console.log("✈️  Tourist       → emma.wilson@outlook.com      / Pass@1234");
+  console.log("✈️  Tourist       → youcef.bensalem@gmail.com    / Pass@1234");
+  console.log("✈️  Tourist       → fatima.zahra@gmail.com       / Pass@1234");
+  console.log("═══════════════════════════════════════════════════════\n");
 
   await mongoose.disconnect();
 }
@@ -789,4 +1049,4 @@ async function seed() {
 seed().catch((err) => {
   console.error("❌ Seed error:", err);
   process.exit(1);
-})
+});

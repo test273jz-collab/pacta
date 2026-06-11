@@ -21,33 +21,198 @@ import {
 import MiniAssistant from "@/components/MiniAssistant";
 
 export default function Home() {
-  const { categories, ads, providers, loading } = useGlobalData();
   const { t, isRTL } = useLanguage();
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    if (!ads.length) return;
-    const timer = setInterval(
-      () => setCurrentSlide((p) => (p + 1) % ads.length),
-      15000,
-    );
-    return () => clearInterval(timer);
-  }, [ads.length]);
+   const ads = [
+    {
+      _id: "6a23f22caec2971665f5b36f",
+      titleEn: "The Golden Dunes of Taghit",
+      titleAr: "الكثبان الذهبية في تاغيت",
+      descEn:
+        "Lose yourself in the endless amber dunes of the Sahara — where silence meets the stars.",
+      descAr:
+        "اكتشف الكثبان العنبرية اللانهائية للصحراء، حيث يلتقي الصمت بالنجوم.",
+      video: "https://www.pexels.com/download/video/2055060/",
+      poster: "https://images.pexels.com/videos/2055060/pictures/preview-0.jpg",
+      category: "sahara",
+      link: "/explore?category=guide&wilaya=Béchar",
+      displayOrder: 1,
+      clickCount: 0,
+      isActive: true,
+    },
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-pacta-cream">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-3 border-pacta-navy border-t-pacta-gold rounded-full animate-spin" />
-          <p className="text-sm font-medium text-pacta-navy/60">
-            {isRTL ? "جاري التحميل..." : "Loading..."}
-          </p>
-        </div>
-      </div>
-    );
-  }
+    {
+      _id: "6a23f22caec2971665f5b37e",
+      titleEn: "Waterfalls of Kherrata",
+      titleAr: "شلالات خراطة",
+      descEn:
+        "Step into a lush canyon where waterfalls cascade into emerald pools — one of Algeria's hidden natural wonders.",
+      descAr:
+        "ادخل وادياً مورقاً حيث تنهمر الشلالات في برك زمردية — إحدى عجائب الجزائر الطبيعية.",
+      video: "https://www.pexels.com/download/video/6981411/",
+      poster: "https://images.pexels.com/videos/6981411/pictures/preview-0.jpg",
+      category: "nature",
+      link: "/explore?category=guide&wilaya=Béjaïa",
+      displayOrder: 6,
+      clickCount: 0,
+      isActive: true,
+    },
 
+    {
+      _id: "6a23f22caec2971665f5b370",
+      titleEn: "Endless Dunes of the Erg Occidental",
+      titleAr: "كثبان العرق الغربي اللانهائية",
+      descEn:
+        "Drone over mesmerizing patterns of wind-sculpted gold across the Algerian Sahara.",
+      descAr:
+        "تحليق فوق أنماط رائعة من الذهب المنحوت بالرياح في الصحراء الجزائرية.",
+      video: "https://www.pexels.com/download/video/3059046/",
+      poster: "https://images.pexels.com/videos/3059046/pictures/preview-0.jpg",
+      category: "sahara",
+      link: "/explore?category=guide&wilaya=Adrar",
+      displayOrder: 7,
+      clickCount: 0,
+      isActive: true,
+    },
+
+    {
+      _id: "6a23f22caec2971665f5b372",
+      titleEn: "Stargazing in the Sahara",
+      titleAr: "مراقبة النجوم في الصحراء",
+      descEn:
+        "Far from city lights, the Algerian Sahara reveals the Milky Way in all its glory.",
+      descAr:
+        "بعيداً عن أضواء المدينة، تكشف الصحراء الجزائرية عن درب التبانة بكل روعتها.",
+      video: "https://www.pexels.com/download/video/1877846/",
+      poster: "https://images.pexels.com/videos/1877846/pictures/preview-0.jpg",
+      category: "sahara",
+      link: "/explore?category=guide&wilaya=Illizi",
+      displayOrder: 9,
+      clickCount: 0,
+      isActive: true,
+    },
+
+    {
+      _id: "6a23f22caec2971665f5b373",
+      titleEn: "The Hidden Coves of Béjaïa",
+      titleAr: "الخلجان المخفية في بجاية",
+      descEn:
+        "Emerald waters, dramatic limestone cliffs and secret grottos along Algeria's Mediterranean coast.",
+      descAr:
+        "مياه زمردية وجروف كلسية رائعة وكهوف سرية على ساحل البحر الأبيض المتوسط.",
+      video: "https://www.pexels.com/download/video/5619876/",
+      poster: "https://images.pexels.com/videos/5619876/pictures/preview-0.jpg",
+      category: "beach",
+      link: "/explore?category=resort&wilaya=Béjaïa",
+      displayOrder: 10,
+      clickCount: 0,
+      isActive: true,
+    },
+
+    {
+      _id: "6a23f22caec2971665f5b374",
+      titleEn: "Wild Coast of Skikda",
+      titleAr: "الساحل البري لسكيكدة",
+      descEn:
+        "Untamed waves, sculpted rocks and salty air — where mountains meet the sea.",
+      descAr:
+        "أمواج جامحة وصخور منحوتة وهواء بحري نقي حيث تلتقي الجبال بالبحر.",
+      video: "https://www.pexels.com/download/video/4625195/",
+      poster: "https://images.pexels.com/videos/4625195/pictures/preview-0.jpg",
+      category: "beach",
+      link: "/explore?category=resort&wilaya=Skikda",
+      displayOrder: 11,
+      clickCount: 0,
+      isActive: true,
+    },
+  ]
+   const categories = [
+  {
+    id: "6a0a01182950f01f8e422e19",
+    slug: "cultural",
+    labelEn: "Cultural Tourism",
+    labelAr: "سياحة ثقافية",
+    iconName: "Compass",
+    count: "0+",
+    bgClass: "bg-amber-50 text-amber-600",
+    image:
+      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040534/pacta_tourism/cultural.jpg",
+    order: 1,
+    isActive: true,
+  },
+
+  {
+    id: "6a0a03192950f01f8e422e1b",
+    slug: "business",
+    labelEn: "Business & Commercial",
+    labelAr: "سياحة تجارية",
+    iconName: "Briefcase",
+    count: "0+",
+    bgClass: "bg-amber-50 text-amber-600",
+    image:
+      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041048/pacta_tourism/business.jpg",
+    order: 2,
+    isActive: true,
+  },
+
+  {
+    id: "6a0a03d12950f01f8e422e1c",
+    slug: "leisure",
+    labelEn: "Leisure & Entertainment",
+    labelAr: "سياحة ترفيهية",
+    iconName: "Palmtree",
+    count: "0+",
+    bgClass: "bg-amber-50 text-amber-600",
+    image:
+      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041232/pacta_tourism/leisure.jpg",
+    order: 3,
+    isActive: true,
+  },
+
+  {
+    id: "6a0a02222950f01f8e422e1a",
+    slug: "medical",
+    labelEn: "Medical & Therapeutic",
+    labelAr: "سياحة علاجية",
+    iconName: "Activity",
+    count: "0+",
+    bgClass: "bg-amber-50 text-amber-600",
+    image:
+      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040802/pacta_tourism/medical.jpg",
+    order: 4,
+    isActive: true,
+  },
+
+  {
+    id: "6a23f47f29d66148c58ba094",
+    slug: "religious",
+    labelEn: "Religious Tourism",
+    labelAr: "سياحة دينية",
+    iconName: "Moon",
+    count: "95+",
+    bgClass: "bg-emerald-50 text-emerald-600",
+    image:
+      "https://images.pexels.com/photos/24964989/pexels-photo-24964989.jpeg",
+    order: 5,
+    isActive: true,
+  },
+
+  {
+    id: "6a23f47f29d66148c58ba095",
+    slug: "educational",
+    labelEn: "Educational Tourism",
+    labelAr: "سياحة تعليمية",
+    iconName: "GraduationCap",
+    count: "45+",
+    bgClass: "bg-purple-50 text-purple-600",
+    image:
+      "https://images.pexels.com/photos/8199141/pexels-photo-8199141.jpeg",
+    order: 6,
+    isActive: true,
+  },
+];
   const getTypeIcon = (type: string) => {
     switch (type?.toLowerCase()) {
       case "hotel":
@@ -236,7 +401,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {categories.map((cat) => (
             <div
-              key={cat._id}
+              key={cat.id}
               className="group relative bg-white rounded-3xl border border-pacta-sand/80 overflow-hidden hover:shadow-2xl hover:shadow-pacta-navy/10 hover:border-pacta-gold/30 transition-all duration-500 flex flex-col"
             >
               {/* Image block */}

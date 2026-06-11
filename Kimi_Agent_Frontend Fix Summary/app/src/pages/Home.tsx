@@ -21,7 +21,7 @@ import {
 import MiniAssistant from "@/components/MiniAssistant";
 
 export default function Home() {
-    const { providers, loading } = useGlobalData();
+  const { providers, loading } = useGlobalData();
 
   const { t, isRTL } = useLanguage();
   const navigate = useNavigate();
@@ -140,7 +140,7 @@ export default function Home() {
       count: "0+",
       bgClass: "bg-amber-50 text-amber-600",
       image:
-        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040534/pacta_tourism/cultural.jpg",
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040534/pacta_tourism/yznou9krfwqvvx658ein.jpg",
       order: 1,
       isActive: true,
     },
@@ -154,7 +154,7 @@ export default function Home() {
       count: "0+",
       bgClass: "bg-amber-50 text-amber-600",
       image:
-        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041048/pacta_tourism/business.jpg",
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041048/pacta_tourism/g0bywmtahy7tk0eflnhv.jpg",
       order: 2,
       isActive: true,
     },
@@ -168,7 +168,7 @@ export default function Home() {
       count: "0+",
       bgClass: "bg-amber-50 text-amber-600",
       image:
-        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041232/pacta_tourism/leisure.jpg",
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041232/pacta_tourism/xc8bybmrxx0qvhiyqiuh.jpg",
       order: 3,
       isActive: true,
     },
@@ -182,7 +182,7 @@ export default function Home() {
       count: "0+",
       bgClass: "bg-amber-50 text-amber-600",
       image:
-        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040802/pacta_tourism/medical.jpg",
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040802/pacta_tourism/z2zk8hdqctzzgrnedtzc.jpg",
       order: 4,
       isActive: true,
     },
@@ -196,7 +196,7 @@ export default function Home() {
       count: "95+",
       bgClass: "bg-emerald-50 text-emerald-600",
       image:
-        "https://images.pexels.com/photos/24964989/pexels-photo-24964989.jpeg",
+        "https://images.pexels.com/photos/24964989/pexels-photo-24964989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       order: 5,
       isActive: true,
     },
@@ -210,7 +210,7 @@ export default function Home() {
       count: "45+",
       bgClass: "bg-purple-50 text-purple-600",
       image:
-        "https://images.pexels.com/photos/8199141/pexels-photo-8199141.jpeg",
+        "https://images.pexels.com/photos/8199141/pexels-photo-8199141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       order: 6,
       isActive: true,
     },

@@ -1007,7 +1007,722 @@ async function seed() {
   // ══════════════════════════════════════════════════════════════════════════
   // SUMMARY
   // ══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════
+//  PACTA — EXTRA SEED DATA  (religious + educational)
+//  Paste each block into the matching section of your main seed.js
+// ════════════════════════════════════════════════════════════════════════════
 
+// ─── Additional image pools ─────────────────────────────────────────────────
+// Add these alongside the existing hotelImgs / resortImgs / etc. pools at the
+// top of seed.js so every new listing has its own fresh Unsplash imagery.
+
+const hotelImgsB = [
+  "https://images.unsplash.com/photo-1548013146-72479768bada?w=800", // mosque-style courtyard
+  "https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?w=800", // traditional arches
+  "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800", // islamic geometric tile
+  "https://images.unsplash.com/photo-1559329814-cf623ebb0d0c?w=800", // university hall
+  "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=800", // stone library
+];
+const resortImgsB = [
+  "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800", // desert camp
+  "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800", // oasis pool
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800", // mountain panorama
+  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800", // vast landscape
+  "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800", // nature camp
+];
+const rentalImgsB = [
+  "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800", // riad courtyard
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800", // traditional room
+  "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800", // heritage interior
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800", // study flat
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800", // modern apt
+];
+const guideImgsB = [
+  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800", // guide in heritage site
+  "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=800", // desert guide
+  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800", // landscape guide
+];
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA USERS  — 2 hotel owners · 2 resort owners · 2 rental owners
+//               · 3 guides  · 4 tourists
+//  Append to the matching User.create([…]) arrays, OR run as a separate block.
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Extra hotel owners ───────────────────────────────────────────────────────
+const extraHotelOwners = await User.create([
+  {
+    name: "Abderrahmane Ziani",
+    email: "abderrahmane.ziani@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[2],
+    role: "hotel_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 661 900 111",
+    location: "Médéa",
+    bio: "Passionné du tourisme spirituel, il gère deux établissements autour des zawiyas de la Mitidja.",
+  },
+  {
+    name: "Saliha Boudjemaa",
+    email: "saliha.boudjemaa@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[4],
+    role: "hotel_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 770 112 233",
+    location: "Béjaïa",
+    bio: "Directrice d'hôtel spécialisée dans l'accueil des groupes universitaires et des chercheurs.",
+  },
+]);
+
+// ── Extra resort owners ──────────────────────────────────────────────────────
+const extraResortOwners = await User.create([
+  {
+    name: "Lotfi Remane",
+    email: "lotfi.remane@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[0],
+    role: "resort_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 661 223 344",
+    location: "El Oued",
+    bio: "Opérateur de camps dans le Souf — spécialiste des séjours spirituels dans les ksour du Sahara.",
+  },
+  {
+    name: "Karima Saadaoui",
+    email: "karima.saadaoui@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[3],
+    role: "resort_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 550 334 455",
+    location: "Batna",
+    bio: "Gérante d'un éco-resort au pied des Aurès, axé sur la recherche archéologique et le patrimoine berbère.",
+  },
+]);
+
+// ── Extra rental owners ──────────────────────────────────────────────────────
+const extraRentalOwners = await User.create([
+  {
+    name: "Fouad Mebarki",
+    email: "fouad.mebarki@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[1],
+    role: "rental_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 661 445 566",
+    location: "Constantine",
+    bio: "Propriétaire de maisons d'hôtes dans la vieille ville de Constantine, proche de la mosquée émir Abdelkader.",
+  },
+  {
+    name: "Widad Lardjane",
+    email: "widad.lardjane@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[5],
+    role: "rental_owner",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 770 556 677",
+    location: "Msila",
+    bio: "Propriétaire de chalets à proximité du site romain de Ksar El Ahmar et de l'université de M'Sila.",
+  },
+]);
+
+// ── Extra guides ─────────────────────────────────────────────────────────────
+const extraGuideOwners = await User.create([
+  {
+    name: "Yacine Mezioud",
+    email: "yacine.mezioud@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[0],
+    role: "guide",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 661 667 788",
+    location: "Constantine",
+    bio: "Guide spécialisé dans le patrimoine islamique de Constantine — mosquées, medersas, et pont Sidi M'Cid.",
+  },
+  {
+    name: "Meriem Chebira",
+    email: "meriem.chebira@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[3],
+    role: "guide",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 550 778 899",
+    location: "Batna",
+    bio: "Archaeologist-guide with a master's degree in Berber and Roman studies, leading field schools at Timgad.",
+  },
+  {
+    name: "Kamel Belabbas",
+    email: "kamel.belabbas@pacta.dz",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[6],
+    role: "guide",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 770 889 900",
+    location: "El Oued",
+    bio: "Expert en architecture ibadite et Sufi du Souf — guide pour groupes universitaires et pèlerins.",
+  },
+]);
+
+// ── Extra tourists ────────────────────────────────────────────────────────────
+const extraTourists = await User.create([
+  {
+    name: "Rayan Al-Farsi",
+    email: "rayan.alfarsi@gmail.com",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[2],
+    role: "tourist",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+968 9123 4567",
+    location: "Muscat, Oman",
+    bio: "Seeking spiritual and historical depth across the Islamic world.",
+  },
+  {
+    name: "Prof. Claire Dupont",
+    email: "claire.dupont@univ-paris.fr",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[5],
+    role: "tourist",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+33 6 98 76 54 32",
+    location: "Lyon, France",
+    bio: "Professor of Roman North African history — annual research visits to Algeria.",
+  },
+  {
+    name: "Abou Bakr Diallo",
+    email: "abou.bakr.diallo@gmail.com",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[7],
+    role: "tourist",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+221 77 123 4567",
+    location: "Dakar, Sénégal",
+    bio: "Islamic studies student on a spiritual tour of North Africa.",
+  },
+  {
+    name: "Lina Marzouqi",
+    email: "lina.marzouqi@outlook.com",
+    password: hash("Pass@1234"),
+    avatar: avatarImgs[4],
+    role: "tourist",
+    approvalStatus: "approved",
+    isActive: true,
+    phone: "+213 661 100 200",
+    location: "Alger, Algérie",
+    bio: "Architecture student passionate about Islamic and pre-Islamic heritage in Algeria.",
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA HOTELS  ×4  (2 religious · 2 educational)
+//  Append inside the Hotel.create([…]) array in section 2.
+// ════════════════════════════════════════════════════════════════════════════
+
+const extraHotels = await Hotel.create([
+
+  // ── religious 1 ──────────────────────────────────────────────────────────
+  {
+    owner: extraHotelOwners[0]._id,
+    titleEn: "Zawiya Palace Hotel — Médéa",
+    titleAr: "فندق قصر الزاوية — المدية",
+    descEn: "A graceful 3-star hotel set within a restored 19th-century zawiya compound on the outskirts of Médéa. The property preserves its original hammam, a Quranic school room, and a domed prayer hall open to all guests. Specialist packages combine meditative retreats, lessons in Maliki jurisprudence, and guided visits to the Marabout shrines of the Mitidja plain. All meals are halal; alcohol-free establishment.",
+    descAr: "فندق أنيق من 3 نجوم ضمن مجمع زاوية مُرمَّم يعود إلى القرن التاسع عشر في ضواحي المدية. يحتفظ الفندق بحمامه التقليدي وقاعة للتحفيظ وقبة للصلاة مفتوحة لجميع النزلاء. باقات متخصصة تجمع بين الخلوات التأملية ودروس الفقه المالكي وزيارات مرشودة لأضرحة مرابطي سهل المتيجة.",
+    wilaya: "Médéa",
+    category: "religious",
+    pricePerNight: 6500,
+    roomsAvailable: 16,
+    propertyClass: 3,
+    images: hotelImgsB,
+    rating: 4.6,
+    reviewCount: 38,
+    isActive: true,
+  },
+
+  // ── religious 2 ──────────────────────────────────────────────────────────
+  {
+    owner: extraHotelOwners[0]._id,
+    titleEn: "Hôtel Emir Abdelkader — Constantine",
+    titleAr: "فندق الأمير عبد القادر — قسنطينة",
+    descEn: "Boutique hotel steps away from the Grand Mosque of Emir Abdelkader — Algeria's largest mosque and an architectural masterpiece of contemporary Islamic design. The hotel arranges private guided tours of the mosque's seven minarets, its enormous library of Islamic manuscripts, and the historic medersas of old Constantine. Evening Quran recitation circles take place in the hotel courtyard every Thursday and Friday.",
+    descAr: "فندق بوتيك على بُعد خطوات من مسجد الأمير عبد القادر الكبير — أكبر مساجد الجزائر وتحفة معمارية في التصميم الإسلامي المعاصر. يُنظم الفندق جولات مرشودة خاصة لمآذنه السبع ومكتبته الثرية بالمخطوطات الإسلامية ومدارس قسنطينة القديمة. حلقات تلاوة القرآن الكريم تُعقد في فناء الفندق كل خميس وجمعة.",
+    wilaya: "Constantine",
+    category: "religious",
+    pricePerNight: 8000,
+    roomsAvailable: 22,
+    propertyClass: 4,
+    images: [hotelImgsB[0], hotelImgsB[2], hotelImgsB[1]],
+    rating: 4.7,
+    reviewCount: 54,
+    isActive: true,
+  },
+
+  // ── educational 1 ─────────────────────────────────────────────────────────
+  {
+    owner: extraHotelOwners[1]._id,
+    titleEn: "Béjaïa University Research Lodge",
+    titleAr: "نزل البحث الجامعي — بجاية",
+    descEn: "A purpose-built academic lodge on the Abderrahmane Mira University campus overlooking the Bay of Béjaïa and Cap Carbon. Hosts international research teams, language schools, and field geology programmes. Facilities include a seminar room (40 seats), a natural history display room, high-speed fibre broadband, and a communal lab kitchen. Coastal geomorphology and marine biology fieldwork packages available year-round.",
+    descAr: "نزل أكاديمي متخصص في حرم جامعة عبد الرحمان ميرة المطل على خليج بجاية ورأس كربون. يستضيف فرق البحث الدولية ومدارس اللغات وبرامج الجيولوجيا الميدانية. المرافق تشمل قاعة ندوات (40 مقعدًا) وقاعة للتاريخ الطبيعي وإنترنت ألياف ضوئية ومختبرًا مشتركًا.",
+    wilaya: "Béjaïa",
+    category: "educational",
+    pricePerNight: 5500,
+    roomsAvailable: 28,
+    propertyClass: 3,
+    images: [hotelImgsB[3], hotelImgsB[4], hotelImgsB[0]],
+    rating: 4.6,
+    reviewCount: 41,
+    isActive: true,
+  },
+
+  // ── educational 2 ─────────────────────────────────────────────────────────
+  {
+    owner: extraHotelOwners[1]._id,
+    titleEn: "Timgad Heritage Scholar Hotel — Batna",
+    titleAr: "فندق العلماء التراثي تيمقاد — باتنة",
+    descEn: "The closest full-service hotel to the UNESCO Roman city of Timgad (18 km), with a dedicated shuttle departing at 07:30 daily. Purpose-built for archaeologists, history students, and educational tour groups. Features a lecture hall with projector, a scale-model room of Roman Timgad, an on-site archaeologist consultant, and a reference library of over 800 North African history volumes. Partnered with the University of Batna and the Institut National d'Archéologie.",
+    descAr: "أقرب فندق متكامل الخدمات لمدينة تيمقاد الرومانية المدرجة على قائمة اليونسكو (18 كم)، مع حافلة مخصصة تنطلق يومياً في 07:30. مخصص لعلماء الآثار وطلاب التاريخ والمجموعات السياحية التعليمية. مزوّد بقاعة محاضرات بمُسقِط ضوئي، وغرفة نماذج مصغرة لتيمقاد الرومانية، ومستشار آثار في الموقع، ومكتبة تضم 800 مجلد في تاريخ شمال أفريقيا.",
+    wilaya: "Batna",
+    category: "educational",
+    pricePerNight: 7200,
+    roomsAvailable: 20,
+    propertyClass: 3,
+    images: [hotelImgsB[4], hotelImgsB[3], hotelImgsB[2]],
+    rating: 4.8,
+    reviewCount: 66,
+    isActive: true,
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA RESORTS  ×4  (2 religious · 2 educational)
+//  Append inside the Resort.create([…]) array in section 3.
+// ════════════════════════════════════════════════════════════════════════════
+
+const extraResorts = await Resort.create([
+
+  // ── religious 1 ──────────────────────────────────────────────────────────
+  {
+    owner: extraResortOwners[0]._id,
+    titleEn: "Souf Ksour Spiritual Retreat — El Oued",
+    titleAr: "ملجأ الروح قصور السوف — الوادي",
+    descEn: "An immersive spiritual retreat nestled in the ancient palm-grove ksour of El Oued, the City of a Thousand Domes. The resort is built entirely in traditional whitewashed Souf architecture. Programmes run year-round: Quran memorisation intensives, Maliki fiqh seminars led by resident sheikhs, Sufi dikr circles, and guided visits to the Zawiyas of Sidi Salem and Sidi Ameur. Single-occupancy rooms for personal retreat. Strict halal and modesty policy.",
+    descAr: "ملجأ روحاني غامر في قصور واحات النخيل القديمة في الوادي — مدينة الألف قبة. المنتجع مبني كليًا بالعمارة البيضاء التقليدية للسوف. برامج طوال العام: محاضن حفظ القرآن الكريم، وندوات الفقه المالكي بإشراف مشايخ مقيمين، وحلقات الذكر الصوفية، وزيارات مرشودة لزاويتي سيدي سالم وسيدي عامر.",
+    wilaya: "El Oued",
+    category: "religious",
+    pricePerNight: 7500,
+    maxCapacity: 2,
+    images: resortImgsB,
+    rating: 4.8,
+    reviewCount: 72,
+    isActive: true,
+  },
+
+  // ── religious 2 ──────────────────────────────────────────────────────────
+  {
+    owner: extraResortOwners[0]._id,
+    titleEn: "Sidi Yahia Thermal & Spiritual Retreat — Guelma",
+    titleAr: "منتجع سيدي يحيى الحراري والروحي — قالمة",
+    descEn: "A unique fusion resort combining the healing thermal springs of Hammam Ouled Ali with the tranquil atmosphere of Sidi Yahia zawiya. Guests alternate between therapeutic hot spring baths (treating arthritis and skin conditions) and spiritual programmes: dawn Fajr walks, evening wird recitation, and weekly lectures by invited Islamic scholars. The resort's architecture echoes Ottoman and Hafsid influences found throughout the Guelma region. Halal certified.",
+    descAr: "منتجع فريد يجمع بين الينابيع الحرارية لحمام أولاد علي وأجواء زاوية سيدي يحيى الهادئة. يتناوب النزلاء بين الحمامات الحرارية العلاجية (تعالج التهاب المفاصل والأمراض الجلدية) والبرامج الروحية: مسيرات الفجر ووظيفة الورد المسائية والمحاضرات الأسبوعية للعلماء.",
+    wilaya: "Guelma",
+    category: "religious",
+    pricePerNight: 8500,
+    maxCapacity: 3,
+    images: [resortImgsB[1], resortImgsB[3], resortImgsB[0]],
+    rating: 4.7,
+    reviewCount: 45,
+    isActive: true,
+  },
+
+  // ── educational 1 ─────────────────────────────────────────────────────────
+  {
+    owner: extraResortOwners[1]._id,
+    titleEn: "Aurès Explorer Eco-Camp — Batna",
+    titleAr: "مخيم مستكشف الأوراس البيئي — باتنة",
+    descEn: "An eco-research camp at 1,500 m altitude in the Aurès Mountains, 25 km from the UNESCO Timgad ruins. Built for scientific expeditions: Berber epigraphy field schools, Chaoui oral heritage documentation projects, regional geology and botanical surveys, and archaeological dig participation programmes. The camp has a solar-powered laboratory, a map room, a seed bank study corner, and weekly lectures by CNRS researchers. Perfect for university field semesters.",
+    descAr: "مخيم بيئي بحثي على ارتفاع 1500 متر في جبال الأوراس، 25 كم من أطلال تيمقاد. مخصص للبعثات العلمية: مدارس ميدانية في النقوش الأمازيغية، ومشاريع توثيق التراث الشاوي الشفهي، ومسوحات جيولوجية ونباتية، وبرامج المشاركة في أعمال التنقيب الأثري. المخيم مزوّد بمختبر يعمل بالطاقة الشمسية وغرفة خرائط ومحاضرات أسبوعية.",
+    wilaya: "Batna",
+    category: "educational",
+    pricePerNight: 9000,
+    maxCapacity: 15,
+    images: [resortImgsB[2], resortImgsB[4], resortImgsB[1]],
+    rating: 4.9,
+    reviewCount: 38,
+    isActive: true,
+  },
+
+  // ── educational 2 ─────────────────────────────────────────────────────────
+  {
+    owner: extraResortOwners[1]._id,
+    titleEn: "Tassili Plateau Science Camp — Illizi",
+    titleAr: "مخيم العلوم هضبة تاسيلي — إليزي",
+    descEn: "A high-altitude science camp on the Tassili N'Ajjer plateau (UNESCO), operating in partnership with the Agence Nationale d'Archéologie. Programmes focus on prehistoric rock art conservation, Saharan palaeoclimatology, and desert ecosystems. Guests are embedded with active research teams for 5- to 14-day stays. Evening lectures under the stars are led by resident archaeologists and palaeontologists. Limited to 10 participants per session to protect fragile site access.",
+    descAr: "مخيم علمي على ارتفاع مرتفع في هضبة تاسيلي ناجر (يونسكو)، يعمل بالشراكة مع الوكالة الوطنية للآثار. تتمحور البرامج حول الحفاظ على الفن الصخري ما قبل التاريخ، وعلم المناخ القديم الصحراوي، والأنظمة البيئية الصحراوية. يُدمج النزلاء مع فرق بحثية نشطة لإقامات تتراوح بين 5 و14 يومًا. الظرفية محدودة بـ10 مشاركين لحماية المواقع الهشة.",
+    wilaya: "Illizi",
+    category: "educational",
+    pricePerNight: 18500,
+    maxCapacity: 10,
+    images: [resortImgsB[4], resortImgsB[2], resortImgsB[3]],
+    rating: 5.0,
+    reviewCount: 22,
+    isActive: true,
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA RENTALS  ×4  (2 religious · 2 educational)
+//  Append inside the Rental.create([…]) array in section 4.
+// ════════════════════════════════════════════════════════════════════════════
+
+const extraRentals = await Rental.create([
+
+  // ── religious 1 ──────────────────────────────────────────────────────────
+  {
+    owner: extraRentalOwners[0]._id,
+    titleEn: "Mosque Quarter Guesthouse — Constantine Old City",
+    titleAr: "دار ضيافة حي المساجد — قسنطينة القديمة",
+    descEn: "A meticulously restored traditional house in the historic medina of Constantine, 3 minutes on foot from the Grand Mosque of Emir Abdelkader and 8 minutes from the Sidi Lakhdar mosque. High ceilings, hand-painted zellige tiles, private prayer room with Quibla indicator. The host — a retired imam — provides optional morning Quran reading sessions. Guests have access to a shared rooftop terrace with a unique view of the Rhumel Gorge. Halal household; no smoking.",
+    descAr: "دار تقليدية مُرممة بعناية في المدينة القديمة بقسنطينة، على بُعد 3 دقائق مشيًا من مسجد الأمير عبد القادر الكبير و8 دقائق من مسجد سيدي لخضر. أسقف عالية، بلاط زليج مرسوم يدويًا، غرفة صلاة خاصة مع مؤشر القبلة. المضيف — إمام متقاعد — يقدم جلسات تلاوة القرآن الصباحية اختياريًا. إطلالة على خوانق الرمال من السطح.",
+    wilaya: "Constantine",
+    category: "religious",
+    pricePerNight: 5500,
+    structure: { type: "villa", roomsCount: 3, bedsCount: 3, bathroomsCount: 2, maxGuests: 6 },
+    images: rentalImgsB,
+    rating: 4.9,
+    reviewCount: 47,
+    isActive: true,
+  },
+
+  // ── religious 2 ──────────────────────────────────────────────────────────
+  {
+    owner: extraRentalOwners[0]._id,
+    titleEn: "Sufi Lodge — Laghouat Zawiya District",
+    titleAr: "نزل الطريقة الصوفية — حي الزاوية، الأغواط",
+    descEn: "A two-bedroom guesthouse within the zawiya complex of Laghouat, a historic Sufi centre at the northern edge of the Algerian Sahara. The lodge faces the zawiya's inner courtyard, where evening Qadiri dikr sessions are held on Fridays. The host family offers traditional Saharan hospitality: camel milk tea, sand-baked bread, and storytelling. Ideal for individual spiritual seekers or couples on a retreat. Day visits to Ain Sefra, El Bayadh, and Aflou easily arranged.",
+    descAr: "نزل من غرفتي نوم داخل مجمع زاوية الأغواط، مركز صوفي تاريخي عند الطرف الشمالي من الصحراء الجزائرية. يطل النزل على الفناء الداخلي للزاوية حيث تُعقد حلقات الذكر القادرية مساء كل جمعة. تقدم العائلة المضيفة الضيافة الصحراوية التقليدية: شاي حليب الإبل والخبز المُحمَّص في الرمل وجلسات سرد الحكايات.",
+    wilaya: "Laghouat",
+    category: "religious",
+    pricePerNight: 4000,
+    structure: { type: "apartment", roomsCount: 2, bedsCount: 2, bathroomsCount: 1, maxGuests: 4 },
+    images: [rentalImgsB[0], rentalImgsB[2], rentalImgsB[4]],
+    rating: 4.8,
+    reviewCount: 29,
+    isActive: true,
+  },
+
+  // ── educational 1 ─────────────────────────────────────────────────────────
+  {
+    owner: extraRentalOwners[1]._id,
+    titleEn: "Researcher's Chalet — Msila Steppe & Roman Sites",
+    titleAr: "شاليه الباحث — سهول المسيلة والمواقع الرومانية",
+    descEn: "A comfortable 2-bedroom chalet 20 km from the partially excavated Roman site of Ksar El Ahmar and 12 km from Msila University's faculty of humanities. Fully equipped kitchen, outdoor terrace, reliable 4G, and a locked storage room for field equipment. The owner — a retired history teacher — curates an on-site mini-library of local archaeological reports and Hauts Plateaux ethnographic studies available to guests. Ideal for solo researchers and visiting lecturers on short academic contracts.",
+    descAr: "شاليه مريح من غرفتي نوم على بعد 20 كم من الموقع الروماني قيد التنقيب كسر الأحمر و12 كم من كلية الآداب بجامعة المسيلة. مطبخ مكتمل التجهيز وتراس خارجي وإنترنت 4G وغرفة تخزين مقفلة للمعدات الميدانية. يوفر المالك مكتبة مصغرة للتقارير الأثرية المحلية.",
+    wilaya: "Msila",
+    category: "educational",
+    pricePerNight: 3800,
+    structure: { type: "apartment", roomsCount: 2, bedsCount: 2, bathroomsCount: 1, maxGuests: 4 },
+    images: [rentalImgsB[3], rentalImgsB[1], rentalImgsB[4]],
+    rating: 4.5,
+    reviewCount: 19,
+    isActive: true,
+  },
+
+  // ── educational 2 ─────────────────────────────────────────────────────────
+  {
+    owner: extraRentalOwners[1]._id,
+    titleEn: "Rock Art Basecamp Villa — Djelfa Steppe",
+    titleAr: "فيلا القاعدة الأساسية للفن الصخري — ديالف",
+    descEn: "A 3-bedroom stone villa at the edge of the Djelfa steppe, gateway to the rock art engravings of the Atlas Saharien (Ain Rich and Messouar sites). The villa hosts university field schools every spring and autumn: sleeping loft for 8, photographic darkroom, GPS device loans, and a dedicated outdoor study pergola. Partnership with the University of Blida allows students to obtain site access permits through the villa. Day routes to Laghouat and Béchar available.",
+    descAr: "فيلا حجرية من 3 غرف نوم عند حافة سهول الجلفة، بوابة نحو نقوش الفن الصخري في الأطلس الصحراوي (مواقع عين ريش ومسوار). تستضيف الفيلا مدارس ميدانية جامعية كل ربيع وخريف: علية للنوم تسع 8 أشخاص وغرفة تحميض تصوير وأجهزة GPS متاحة للإعارة ومظلة دراسة خارجية. شراكة مع جامعة البليدة للحصول على تصاريح الوصول إلى المواقع.",
+    wilaya: "Djelfa",
+    category: "educational",
+    pricePerNight: 5000,
+    structure: { type: "villa", roomsCount: 3, bedsCount: 8, bathroomsCount: 2, maxGuests: 8 },
+    images: [rentalImgsB[2], rentalImgsB[0], rentalImgsB[3]],
+    rating: 4.7,
+    reviewCount: 24,
+    isActive: true,
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA GUIDES  ×3  (religious · educational · mixed)
+//  Append inside the Guide.create([…]) array in section 5.
+// ════════════════════════════════════════════════════════════════════════════
+
+const extraGuides = await Guide.create([
+
+  // ── religious ─────────────────────────────────────────────────────────────
+  {
+    owner: extraGuideOwners[0]._id,
+    nameEn: "Yacine — Islamic Heritage of Constantine & the East",
+    nameAr: "ياسين — التراث الإسلامي لقسنطينة والشرق الجزائري",
+    expertiseEn: "Licensed guide specialising in the Islamic monuments of eastern Algeria. Signature tours: the Grand Mosque of Emir Abdelkader (full architectural and historical deep-dive), the Sidi Lakhdar and Sidi M'Cid mosque circuits, the 14th-century Salah Bey Mosque in Sousse quarter, and the medersas of old Constantine. Multi-day extension available to the Hafsid-era mosques of Annaba and the zawiyas of Skikda. All tours available in Arabic, French, and English. Groups capped at 12 for respectful access to active prayer spaces.",
+    expertiseAr: "مرشد مرخص متخصص في المعالم الإسلامية لشرق الجزائر. جولاته المميزة: المسجد الكبير للأمير عبد القادر (غوص كامل في العمارة والتاريخ)، ودوائر مسجدي سيدي لخضر وسيدي مسيد، ومسجد صالح باي الجمعة من القرن الرابع عشر، ومدارس قسنطينة القديمة. امتداد متعدد الأيام لمساجد حفصية في عنابة وزوايا سكيكدة.",
+    wilaya: "Constantine",
+    category: "religious",
+    pricePerDay: 4200,
+    maxGroupSize: 12,
+    languagesSpoken: ["ar", "fr", "en"],
+    specializations: [
+      "Grand Mosque Emir Abdelkader",
+      "Ottoman-era mosques",
+      "Medersas & Islamic schools",
+      "Zawiya circuits",
+      "Religious manuscript libraries",
+    ],
+    images: guideImgsB,
+    rating: 4.9,
+    reviewCount: 61,
+    isActive: true,
+  },
+
+  // ── educational ───────────────────────────────────────────────────────────
+  {
+    owner: extraGuideOwners[1]._id,
+    nameEn: "Meriem — Aurès & Timgad Field School Guide",
+    nameAr: "مريم — مرشدة المدرسة الميدانية — الأوراس وتيمقاد",
+    expertiseEn: "Archaeologist and licensed heritage guide with an MSc in Roman North Africa from the University of Batna. Leads specialist university field schools at Timgad (UNESCO), Lambèse Roman fortress, and the Aurès Berber villages. Programmes range from 2-day orientation visits for secondary school groups to 3-week excavation participation stints for graduate students. Expert in Chaoui oral traditions, Berber epigraphy, and Roman military history. Fluent in Arabic, Tamazight (Chaoui dialect), French, and English.",
+    expertiseAr: "عالمة آثار ومرشدة تراث مرخصة بماجستير في شمال أفريقيا الروماني من جامعة باتنة. تقود مدارس ميدانية جامعية متخصصة في تيمقاد (يونسكو) وقلعة لمبيز الرومانية وقرى الأوراس الأمازيغية. تتراوح البرامج بين زيارات التوجيه اليومية للمجموعات المدرسية وبرامج المشاركة في التنقيب لمدة 3 أسابيع لطلاب الدراسات العليا.",
+    wilaya: "Batna",
+    category: "educational",
+    pricePerDay: 5800,
+    maxGroupSize: 18,
+    languagesSpoken: ["ar", "fr", "en", "Tamazight (Chaoui)"],
+    specializations: [
+      "Timgad UNESCO field school",
+      "Roman military archaeology",
+      "Berber epigraphy",
+      "Chaoui heritage documentation",
+      "Lambèse fortress tours",
+    ],
+    images: [guideImgsB[0], guideImgsB[2], guideImgsB[1]],
+    rating: 4.9,
+    reviewCount: 49,
+    isActive: true,
+  },
+
+  // ── religious + educational (Souf region) ────────────────────────────────
+  {
+    owner: extraGuideOwners[2]._id,
+    nameEn: "Kamel — Ibadite Architecture & Sufi Tradition — El Oued",
+    nameAr: "كمال — العمارة الإباضية والتراث الصوفي — الوادي",
+    expertiseEn: "Expert guide and lecturer in Ibadite religious architecture and Qadiri Sufi tradition in the Souf region. Leads in-depth tours of El Oued's thousand domed houses, the subterranean foggara irrigation systems, the Great Mosque of El Oued, and the Kharijite zawiya library holding manuscripts dating to the 12th century. Educational packages for architecture and Islamic studies university groups include hands-on lime-plaster dome workshops with local craftsmen. Also guides spiritual pilgrimages to the regional marabout circuit.",
+    expertiseAr: "مرشد وأستاذ متخصص في العمارة الدينية الإباضية والطريقة القادرية الصوفية في منطقة السوف. يقود جولات معمقة في بيوت الوادي ذات الألف قبة وشبكات الفقارة تحت الأرضية للري ومسجد الوادي الكبير ومكتبة الزاوية الخارجية التي تحتوي على مخطوطات تعود للقرن الثاني عشر. باقات تعليمية لمجموعات جامعية في العمارة والدراسات الإسلامية تشمل ورشًا تطبيقية لبناء القباب الجيرية مع حرفيين محليين.",
+    wilaya: "El Oued",
+    category: "religious",
+    pricePerDay: 4800,
+    maxGroupSize: 10,
+    languagesSpoken: ["ar", "fr"],
+    specializations: [
+      "Ibadite dome architecture",
+      "Foggara irrigation systems",
+      "Sufi zawiya circuits",
+      "Islamic manuscript libraries",
+      "Lime-plaster dome workshop",
+    ],
+    images: [guideImgsB[1], guideImgsB[0], guideImgsB[2]],
+    rating: 4.8,
+    reviewCount: 33,
+    isActive: true,
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA RESERVATIONS  (covers new listings, mix of statuses)
+// ════════════════════════════════════════════════════════════════════════════
+
+const extraReservations = await Reservation.create([
+  // completed ───────────────────────────────────────────────────────────────
+  {
+    tourist: extraTourists[2]._id,        // Abou Bakr Diallo
+    provider: extraHotelOwners[0]._id,
+    listingId: extraHotels[0]._id,        // Zawiya Palace Hotel Médéa
+    listingModel: "Hotel",
+    status: "completed",
+    startDate: past(25), endDate: past(21),
+    totalPrice: 26000,
+    guestCount: 1,
+    specialRequests: "I would like to attend the Quran study circles during my stay.",
+    paymentStatus: "paid",
+  },
+  {
+    tourist: extraTourists[1]._id,        // Prof. Claire Dupont
+    provider: extraHotelOwners[1]._id,
+    listingId: extraHotels[3]._id,        // Timgad Heritage Scholar Hotel
+    listingModel: "Hotel",
+    status: "completed",
+    startDate: past(18), endDate: past(11),
+    totalPrice: 50400,
+    guestCount: 1,
+    specialRequests: "Please arrange the daily shuttle to Timgad and reserve access to the reference library.",
+    paymentStatus: "paid",
+  },
+  {
+    tourist: extraTourists[0]._id,        // Rayan Al-Farsi
+    provider: extraResortOwners[0]._id,
+    listingId: extraResorts[0]._id,       // Souf Ksour Spiritual Retreat
+    listingModel: "Resort",
+    status: "completed",
+    startDate: past(12), endDate: past(5),
+    totalPrice: 52500,
+    guestCount: 1,
+    paymentStatus: "paid",
+  },
+  {
+    tourist: extraTourists[3]._id,        // Lina Marzouqi
+    provider: extraGuideOwners[2]._id,
+    listingId: extraGuides[2]._id,        // Kamel Ibadite guide
+    listingModel: "Guide",
+    status: "completed",
+    startDate: past(9), endDate: past(7),
+    totalPrice: 9600,
+    guestCount: 3,
+    paymentStatus: "paid",
+  },
+  // confirmed ───────────────────────────────────────────────────────────────
+  {
+    tourist: extraTourists[1]._id,        // Prof. Claire Dupont
+    provider: extraResortOwners[1]._id,
+    listingId: extraResorts[2]._id,       // Aurès Explorer Eco-Camp
+    listingModel: "Resort",
+    status: "confirmed",
+    startDate: future(4), endDate: future(18),
+    totalPrice: 126000,
+    guestCount: 6,
+    specialRequests: "Group of 6 researchers. Please arrange GPS equipment and an Amazigh epigraphy workshop.",
+    paymentStatus: "paid",
+  },
+  {
+    tourist: extraTourists[2]._id,        // Abou Bakr Diallo
+    provider: extraRentalOwners[0]._id,
+    listingId: extraRentals[0]._id,       // Mosque Quarter Guesthouse Constantine
+    listingModel: "Rental",
+    status: "confirmed",
+    startDate: future(6), endDate: future(13),
+    totalPrice: 38500,
+    guestCount: 2,
+    paymentStatus: "paid",
+  },
+  // pending ─────────────────────────────────────────────────────────────────
+  {
+    tourist: extraTourists[0]._id,        // Rayan Al-Farsi
+    provider: extraHotelOwners[0]._id,
+    listingId: extraHotels[1]._id,        // Hôtel Emir Abdelkader Constantine
+    listingModel: "Hotel",
+    status: "pending",
+    startDate: future(14), endDate: future(19),
+    totalPrice: 40000,
+    guestCount: 2,
+    paymentStatus: "pending",
+  },
+  {
+    tourist: extraTourists[3]._id,        // Lina Marzouqi
+    provider: extraGuideOwners[1]._id,
+    listingId: extraGuides[1]._id,        // Meriem Aurès guide
+    listingModel: "Guide",
+    status: "pending",
+    startDate: future(20), endDate: future(22),
+    totalPrice: 11600,
+    guestCount: 2,
+    paymentStatus: "pending",
+  },
+]);
+
+
+// ════════════════════════════════════════════════════════════════════════════
+//  EXTRA REVIEWS  (only for completed extra reservations)
+// ════════════════════════════════════════════════════════════════════════════
+
+await Review.create([
+  {
+    tourist: extraTourists[2]._id,
+    reservation: extraReservations[0]._id,
+    listingId: extraHotels[0]._id,
+    listingModel: "Hotel",
+    rating: 5,
+    comment: "The Zawiya Palace Hotel exceeded all my expectations. Waking up for Fajr prayer in the original domed hall, joining the sheikh's morning reading circle, then spending the afternoon exploring the Mitidja marabout shrines — it was the most spiritually enriching week of my life. The staff treat every guest like family. Highly recommended for anyone seeking genuine Islamic spiritual tourism in Algeria.",
+    isApproved: true,
+    isVerifiedTrip: true,
+    helpfulCount: 34,
+  },
+  {
+    tourist: extraTourists[1]._id,
+    reservation: extraReservations[1]._id,
+    listingId: extraHotels[3]._id,
+    listingModel: "Hotel",
+    rating: 5,
+    comment: "As a university professor who has visited Timgad six times, I can honestly say the Scholar Hotel has transformed the research experience. The reference library is remarkably comprehensive, the archaeologist consultant answered questions even during dinner, and the 07:30 shuttle arrived without fail every morning. The scale-model room of Roman Timgad alone is worth the stay — I used it to brief my students before each field session. Essential for any serious academic visit.",
+    isApproved: true,
+    isVerifiedTrip: true,
+    helpfulCount: 58,
+  },
+  {
+    tourist: extraTourists[0]._id,
+    reservation: extraReservations[2]._id,
+    listingId: extraResorts[0]._id,
+    listingModel: "Resort",
+    rating: 5,
+    comment: "سبعة أيام في منتجع قصور السوف غيّرت حياتي. الانغماس الكامل في الروحانيات الصحراوية — حلقات الذكر الليلية، خطب الشيوخ، الأجواء التي لم أجد مثلها في أي مكان آخر في العالم الإسلامي. العمارة القصورية البيضاء تحت نجوم الصحراء شيء لا يوصف. أنصح به بشدة لكل مسلم يبحث عن تجربة روحية أصيلة.",
+    isApproved: true,
+    isVerifiedTrip: true,
+    helpfulCount: 67,
+  },
+  {
+    tourist: extraTourists[3]._id,
+    reservation: extraReservations[3]._id,
+    listingId: extraGuides[2]._id,
+    listingModel: "Guide",
+    rating: 5,
+    comment: "جولة كمال في الوادي كانت تجربة فريدة جمعت بين الفقه المعماري والروحانية في آنٍ واحد. شرح القباب الإباضية وأنظمة الفقارة بأسلوب علمي رصين ثم قادنا إلى حلقة ذكر مسائية كأننا نزلاء دائمون لا سياح. إنه المرشد المثالي لطلاب العمارة والدراسات الإسلامية على حدٍّ سواء.",
+    isApproved: true,
+    isVerifiedTrip: true,
+    helpfulCount: 41,
+  },
+]);
+
+// ════════════════════════════════════════════════════════════════════════════
+//  CONSOLE SUMMARY  — append these lines to your existing summary block
+// ════════════════════════════════════════════════════════════════════════════
+
+console.log(`\n── Extra religious & educational data ─────────────────────`);
+console.log(`🏨 Extra hotels:  ${extraHotels.length}  (2 religious · 2 educational)`);
+console.log(`🌴 Extra resorts: ${extraResorts.length}  (2 religious · 2 educational)`);
+console.log(`🏠 Extra rentals: ${extraRentals.length}  (2 religious · 2 educational)`);
+console.log(`🗺  Extra guides:  ${extraGuides.length}  (1 religious · 1 educational · 1 dual)`);
+console.log(`📅 Extra reservations: ${extraReservations.length}`);
+console.log(`⭐ Extra reviews: 4`);
+console.log(`─────────────────────────────────────────────────────────────`);
+console.log("🏨 Hotel owner   → abderrahmane.ziani@pacta.dz   / Pass@1234  (Médéa zawiya + Constantine)");
+console.log("🏨 Hotel owner   → saliha.boudjemaa@pacta.dz     / Pass@1234  (Béjaïa + Batna)");
+console.log("🌴 Resort owner  → lotfi.remane@pacta.dz         / Pass@1234  (El Oued + Guelma)");
+console.log("🌴 Resort owner  → karima.saadaoui@pacta.dz      / Pass@1234  (Batna + Illizi)");
+console.log("🏠 Rental owner  → fouad.mebarki@pacta.dz        / Pass@1234  (Constantine × 2)");
+console.log("🏠 Rental owner  → widad.lardjane@pacta.dz       / Pass@1234  (Msila + Djelfa)");
+console.log("🗺  Guide        → yacine.mezioud@pacta.dz        / Pass@1234  (Constantine religious)");
+console.log("🗺  Guide        → meriem.chebira@pacta.dz        / Pass@1234  (Aurès educational)");
+console.log("🗺  Guide        → kamel.belabbas@pacta.dz        / Pass@1234  (El Oued dual)");
+console.log("✈️  Tourist      → rayan.alfarsi@gmail.com         / Pass@1234");
+console.log("✈️  Tourist      → claire.dupont@univ-paris.fr    / Pass@1234");
+console.log("✈️  Tourist      → abou.bakr.diallo@gmail.com     / Pass@1234");
+console.log("✈️  Tourist      → lina.marzouqi@outlook.com      / Pass@1234");
   console.log("\n═══════════════════════════════════════════════════════");
   console.log("✅  SEED COMPLETE — Login credentials:");
   console.log("═══════════════════════════════════════════════════════");

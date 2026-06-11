@@ -21,11 +21,13 @@ import {
 import MiniAssistant from "@/components/MiniAssistant";
 
 export default function Home() {
+    const { providers, loading } = useGlobalData();
+
   const { t, isRTL } = useLanguage();
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-   const ads = [
+  const ads = [
     {
       _id: "6a23f22caec2971665f5b36f",
       titleEn: "The Golden Dunes of Taghit",
@@ -127,92 +129,92 @@ export default function Home() {
       clickCount: 0,
       isActive: true,
     },
-  ]
-   const categories = [
-  {
-    id: "6a0a01182950f01f8e422e19",
-    slug: "cultural",
-    labelEn: "Cultural Tourism",
-    labelAr: "سياحة ثقافية",
-    iconName: "Compass",
-    count: "0+",
-    bgClass: "bg-amber-50 text-amber-600",
-    image:
-      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040534/pacta_tourism/cultural.jpg",
-    order: 1,
-    isActive: true,
-  },
+  ];
+  const categories = [
+    {
+      id: "6a0a01182950f01f8e422e19",
+      slug: "cultural",
+      labelEn: "Cultural Tourism",
+      labelAr: "سياحة ثقافية",
+      iconName: "Compass",
+      count: "0+",
+      bgClass: "bg-amber-50 text-amber-600",
+      image:
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040534/pacta_tourism/cultural.jpg",
+      order: 1,
+      isActive: true,
+    },
 
-  {
-    id: "6a0a03192950f01f8e422e1b",
-    slug: "business",
-    labelEn: "Business & Commercial",
-    labelAr: "سياحة تجارية",
-    iconName: "Briefcase",
-    count: "0+",
-    bgClass: "bg-amber-50 text-amber-600",
-    image:
-      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041048/pacta_tourism/business.jpg",
-    order: 2,
-    isActive: true,
-  },
+    {
+      id: "6a0a03192950f01f8e422e1b",
+      slug: "business",
+      labelEn: "Business & Commercial",
+      labelAr: "سياحة تجارية",
+      iconName: "Briefcase",
+      count: "0+",
+      bgClass: "bg-amber-50 text-amber-600",
+      image:
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041048/pacta_tourism/business.jpg",
+      order: 2,
+      isActive: true,
+    },
 
-  {
-    id: "6a0a03d12950f01f8e422e1c",
-    slug: "leisure",
-    labelEn: "Leisure & Entertainment",
-    labelAr: "سياحة ترفيهية",
-    iconName: "Palmtree",
-    count: "0+",
-    bgClass: "bg-amber-50 text-amber-600",
-    image:
-      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041232/pacta_tourism/leisure.jpg",
-    order: 3,
-    isActive: true,
-  },
+    {
+      id: "6a0a03d12950f01f8e422e1c",
+      slug: "leisure",
+      labelEn: "Leisure & Entertainment",
+      labelAr: "سياحة ترفيهية",
+      iconName: "Palmtree",
+      count: "0+",
+      bgClass: "bg-amber-50 text-amber-600",
+      image:
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779041232/pacta_tourism/leisure.jpg",
+      order: 3,
+      isActive: true,
+    },
 
-  {
-    id: "6a0a02222950f01f8e422e1a",
-    slug: "medical",
-    labelEn: "Medical & Therapeutic",
-    labelAr: "سياحة علاجية",
-    iconName: "Activity",
-    count: "0+",
-    bgClass: "bg-amber-50 text-amber-600",
-    image:
-      "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040802/pacta_tourism/medical.jpg",
-    order: 4,
-    isActive: true,
-  },
+    {
+      id: "6a0a02222950f01f8e422e1a",
+      slug: "medical",
+      labelEn: "Medical & Therapeutic",
+      labelAr: "سياحة علاجية",
+      iconName: "Activity",
+      count: "0+",
+      bgClass: "bg-amber-50 text-amber-600",
+      image:
+        "https://res.cloudinary.com/dgncqrtc5/image/upload/v1779040802/pacta_tourism/medical.jpg",
+      order: 4,
+      isActive: true,
+    },
 
-  {
-    id: "6a23f47f29d66148c58ba094",
-    slug: "religious",
-    labelEn: "Religious Tourism",
-    labelAr: "سياحة دينية",
-    iconName: "Moon",
-    count: "95+",
-    bgClass: "bg-emerald-50 text-emerald-600",
-    image:
-      "https://images.pexels.com/photos/24964989/pexels-photo-24964989.jpeg",
-    order: 5,
-    isActive: true,
-  },
+    {
+      id: "6a23f47f29d66148c58ba094",
+      slug: "religious",
+      labelEn: "Religious Tourism",
+      labelAr: "سياحة دينية",
+      iconName: "Moon",
+      count: "95+",
+      bgClass: "bg-emerald-50 text-emerald-600",
+      image:
+        "https://images.pexels.com/photos/24964989/pexels-photo-24964989.jpeg",
+      order: 5,
+      isActive: true,
+    },
 
-  {
-    id: "6a23f47f29d66148c58ba095",
-    slug: "educational",
-    labelEn: "Educational Tourism",
-    labelAr: "سياحة تعليمية",
-    iconName: "GraduationCap",
-    count: "45+",
-    bgClass: "bg-purple-50 text-purple-600",
-    image:
-      "https://images.pexels.com/photos/8199141/pexels-photo-8199141.jpeg",
-    order: 6,
-    isActive: true,
-  },
-];
+    {
+      id: "6a23f47f29d66148c58ba095",
+      slug: "educational",
+      labelEn: "Educational Tourism",
+      labelAr: "سياحة تعليمية",
+      iconName: "GraduationCap",
+      count: "45+",
+      bgClass: "bg-purple-50 text-purple-600",
+      image:
+        "https://images.pexels.com/photos/8199141/pexels-photo-8199141.jpeg",
+      order: 6,
+      isActive: true,
+    },
+  ];
   const getTypeIcon = (type: string) => {
     switch (type?.toLowerCase()) {
       case "hotel":
@@ -449,10 +451,6 @@ export default function Home() {
                   isRTL ? "text-right" : "text-left"
                 }`}
               >
-                <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
-                  {isRTL ? cat.descAr : cat.descEn}
-                </p>
-
                 <button
                   onClick={() => navigate(`/explore?category=${cat.slug}`)}
                   className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-pacta-navy to-pacta-teal text-white text-sm font-bold rounded-2xl hover:shadow-lg hover:shadow-pacta-navy/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-auto"
